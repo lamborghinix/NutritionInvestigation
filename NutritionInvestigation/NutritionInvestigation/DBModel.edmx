@@ -1,0 +1,758 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="myDBModel.Store" Provider="System.Data.SQLite.EF6" ProviderManifestToken="data source=d:\Users\lambo\Documents\GitHubVisualStudio\NutritionInvestigation\NutritionInvestigation\NutritionInvestigation\DB\myDB.db" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="CustomerInfo">
+          <Key>
+            <PropertyRef Name="MyID" />
+          </Key>
+          <Property Name="MyID" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="QueueID" Type="integer" />
+          <Property Name="HealthBookID" Type="integer" />
+          <Property Name="name" Type="char" MaxLength="256" />
+          <Property Name="birthday" Type="datetime" />
+          <Property Name="GestationalWeek" Type="integer" />
+          <Property Name="Height" Type="real" />
+          <Property Name="beforeWeight" Type="real" />
+          <Property Name="currentWeight" Type="real" />
+        </EntityType>
+        <EntityType Name="CustomerInputRecord">
+          <Key>
+            <PropertyRef Name="MyID" />
+          </Key>
+          <Property Name="MyID" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CustomerID" Type="integer" Nullable="false" />
+          <Property Name="InvestigationDate" Type="datetime" />
+          <Property Name="cuurentWeight" Type="real" />
+          <Property Name="InvestigatorID" Type="integer" />
+          <Property Name="InvestigatorName" Type="char" MaxLength="256" />
+          <Property Name="AuditorID" Type="integer" />
+          <Property Name="AuditorName" Type="char" MaxLength="256" />
+          <Property Name="IsInputFinish" Type="smallint" />
+        </EntityType>
+        <!--生成过程中发现错误:
+警告 6005: 目标实体框架版本目前不支持数据类型“”；已排除表“main.DataTransferRecords”中的列“ExcuteRemark”。-->
+        <EntityType Name="DataTransferRecords">
+          <Key>
+            <PropertyRef Name="MyID" />
+          </Key>
+          <Property Name="MyID" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="OperatorID" Type="integer" />
+          <Property Name="OperatorName" Type="char" MaxLength="256" />
+          <Property Name="TransferKind" Type="integer" />
+          <Property Name="TransferDateTime" Type="datetime" />
+          <Property Name="ExcuteTime" Type="datetime" />
+          <Property Name="ExcuteResult" Type="smallint" />
+        </EntityType>
+        <EntityType Name="Doctors">
+          <Key>
+            <PropertyRef Name="MyID" />
+          </Key>
+          <Property Name="MyID" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DoctorName" Type="char" MaxLength="256" />
+        </EntityType>
+        <!--生成过程中发现错误:
+警告 6005: 目标实体框架版本目前不支持数据类型“”；已排除表“main.FoodClass”中的列“Description”。
+警告 6005: 目标实体框架版本目前不支持数据类型“”；已排除表“main.FoodClass”中的列“ReferencePicture”。
+警告 6005: 目标实体框架版本目前不支持数据类型“”；已排除表“main.FoodClass”中的列“ReferenceValue”。-->
+        <EntityType Name="FoodClass">
+          <Key>
+            <PropertyRef Name="MyID" />
+          </Key>
+          <Property Name="MyID" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FoodClassName" Type="char" MaxLength="256" />
+          <Property Name="ParentID" Type="integer" />
+          <Property Name="ParentName" Type="char" MaxLength="256" />
+          <Property Name="Percent" Type="integer" />
+          <Property Name="Edible" Type="integer" />
+          <Property Name="RecordMode" Type="integer" />
+          <Property Name="TypicalFood" Type="char" MaxLength="256" />
+          <Property Name="FoodIndex" Type="char" MaxLength="256" />
+          <Property Name="FoodUnit" Type="char" MaxLength="256" />
+          <Property Name="needInput" Type="smallint" />
+        </EntityType>
+        <EntityType Name="FoodIntakeRecord">
+          <Key>
+            <PropertyRef Name="MyID" />
+          </Key>
+          <Property Name="MyID" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CustomerInputRecordID" Type="integer" />
+          <Property Name="FoodClassID" Type="integer" Nullable="false" />
+          <Property Name="IntakeFrequency" Type="integer" />
+          <Property Name="Intake" Type="integer" />
+          <Property Name="AverageADay" Type="real" />
+          <Property Name="TypicalAverageADay" Type="real" />
+        </EntityType>
+        <EntityType Name="FoodNutritions">
+          <Key>
+            <PropertyRef Name="MyID" />
+          </Key>
+          <Property Name="MyID" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FoodClassID" Type="integer" Nullable="false" />
+          <Property Name="NutritionElementID" Type="integer" Nullable="false" />
+          <Property Name="NutritionValue" Type="real" />
+        </EntityType>
+        <EntityType Name="FoodStatic">
+          <Key>
+            <PropertyRef Name="MyID" />
+          </Key>
+          <Property Name="MyID" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FoodStaticName" Type="char" MaxLength="256" />
+          <Property Name="FoodClassID" Type="integer" />
+          <Property Name="FoodClassUnit" Type="char" MaxLength="256" />
+        </EntityType>
+        <EntityType Name="FoodStaticResult">
+          <Key>
+            <PropertyRef Name="MyID" />
+          </Key>
+          <Property Name="MyID" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CustomerInputRecordID" Type="integer" />
+          <Property Name="FoodStaticName" Type="char" MaxLength="256" />
+          <Property Name="FoodClassID" Type="integer" />
+          <Property Name="FoodClassUnit" Type="char" MaxLength="256" />
+        </EntityType>
+        <EntityType Name="NuritiveElement">
+          <Key>
+            <PropertyRef Name="MyID" />
+          </Key>
+          <Property Name="MyID" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ElementName" Type="char" MaxLength="256" />
+          <Property Name="ElementUnit" Type="char" MaxLength="256" />
+          <Property Name="ShowOnReport" Type="smallint" />
+        </EntityType>
+        <EntityType Name="NutritionStatisticResults">
+          <Key>
+            <PropertyRef Name="MyID" />
+          </Key>
+          <Property Name="MyID" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CustomerInputRecordID" Type="integer" />
+          <Property Name="ElementName" Type="char" MaxLength="256" />
+          <Property Name="ElementUnit" Type="char" MaxLength="256" />
+          <Property Name="ShowOnReport" Type="smallint" />
+          <Property Name="ElementValue" Type="real" />
+        </EntityType>
+        <!--生成过程中发现错误:
+警告 6005: 目标实体框架版本目前不支持数据类型“”；已排除表“main.PrintLog”中的列“PrintRemark”。-->
+        <EntityType Name="PrintLog">
+          <Key>
+            <PropertyRef Name="MyID" />
+          </Key>
+          <Property Name="MyID" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="OperatorID" Type="integer" />
+          <Property Name="OperatorName" Type="char" MaxLength="256" />
+          <Property Name="PrintDateTime" Type="datetime" />
+          <Property Name="PrintResult" Type="smallint" />
+        </EntityType>
+        <EntityType Name="RNIStandard">
+          <Key>
+            <PropertyRef Name="MyID" />
+          </Key>
+          <Property Name="MyID" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Stage" Type="integer" />
+          <Property Name="Kcal" Type="real" />
+          <Property Name="Kj" Type="real" />
+          <Property Name="Protein" Type="real" />
+          <Property Name="Fat" Type="real" />
+          <Property Name="Carbo" Type="real" />
+          <Property Name="Fiber" Type="real" />
+          <Property Name="Ca" Type="real" />
+          <Property Name="P" Type="real" />
+          <Property Name="K" Type="real" />
+          <Property Name="Na" Type="real" />
+          <Property Name="Mg" Type="real" />
+          <Property Name="Fe" Type="real" />
+          <Property Name="Zn" Type="real" />
+          <Property Name="Se" Type="real" />
+          <Property Name="Cu" Type="real" />
+          <Property Name="Mn" Type="real" />
+          <Property Name="Cholestl" Type="real" />
+          <Property Name="Rentinol" Type="real" />
+          <Property Name="Caroten" Type="real" />
+          <Property Name="Vita" Type="real" />
+          <Property Name="Vc" Type="real" />
+          <Property Name="Ve" Type="real" />
+          <Property Name="Thianmin" Type="real" />
+          <Property Name="Riboflav" Type="real" />
+          <Property Name="Niacin" Type="real" />
+        </EntityType>
+        <Association Name="FK_FoodIntakeRecord_0_0">
+          <End Role="CustomerInputRecord" Type="Self.CustomerInputRecord" Multiplicity="0..1" />
+          <End Role="FoodIntakeRecord" Type="Self.FoodIntakeRecord" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CustomerInputRecord">
+              <PropertyRef Name="MyID" />
+            </Principal>
+            <Dependent Role="FoodIntakeRecord">
+              <PropertyRef Name="CustomerInputRecordID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FoodNutritions_0_0">
+          <End Role="NuritiveElement" Type="Self.NuritiveElement" Multiplicity="1" />
+          <End Role="FoodNutritions" Type="Self.FoodNutritions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NuritiveElement">
+              <PropertyRef Name="MyID" />
+            </Principal>
+            <Dependent Role="FoodNutritions">
+              <PropertyRef Name="NutritionElementID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FoodNutritions_1_0">
+          <End Role="FoodClass" Type="Self.FoodClass" Multiplicity="1" />
+          <End Role="FoodNutritions" Type="Self.FoodNutritions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FoodClass">
+              <PropertyRef Name="MyID" />
+            </Principal>
+            <Dependent Role="FoodNutritions">
+              <PropertyRef Name="FoodClassID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FoodStaticResult_0_0">
+          <End Role="CustomerInputRecord" Type="Self.CustomerInputRecord" Multiplicity="0..1" />
+          <End Role="FoodStaticResult" Type="Self.FoodStaticResult" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CustomerInputRecord">
+              <PropertyRef Name="MyID" />
+            </Principal>
+            <Dependent Role="FoodStaticResult">
+              <PropertyRef Name="CustomerInputRecordID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_NutritionStatisticResults_0_0">
+          <End Role="CustomerInputRecord" Type="Self.CustomerInputRecord" Multiplicity="0..1" />
+          <End Role="NutritionStatisticResults" Type="Self.NutritionStatisticResults" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CustomerInputRecord">
+              <PropertyRef Name="MyID" />
+            </Principal>
+            <Dependent Role="NutritionStatisticResults">
+              <PropertyRef Name="CustomerInputRecordID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="myDBModelStoreContainer">
+          <EntitySet Name="CustomerInfo" EntityType="Self.CustomerInfo" store:Type="Tables" />
+          <EntitySet Name="CustomerInputRecord" EntityType="Self.CustomerInputRecord" store:Type="Tables" />
+          <EntitySet Name="DataTransferRecords" EntityType="Self.DataTransferRecords" store:Type="Tables" />
+          <EntitySet Name="Doctors" EntityType="Self.Doctors" store:Type="Tables" />
+          <EntitySet Name="FoodClass" EntityType="Self.FoodClass" store:Type="Tables" />
+          <EntitySet Name="FoodIntakeRecord" EntityType="Self.FoodIntakeRecord" store:Type="Tables" />
+          <EntitySet Name="FoodNutritions" EntityType="Self.FoodNutritions" store:Type="Tables" />
+          <EntitySet Name="FoodStatic" EntityType="Self.FoodStatic" store:Type="Tables" />
+          <EntitySet Name="FoodStaticResult" EntityType="Self.FoodStaticResult" store:Type="Tables" />
+          <EntitySet Name="NuritiveElement" EntityType="Self.NuritiveElement" store:Type="Tables" />
+          <EntitySet Name="NutritionStatisticResults" EntityType="Self.NutritionStatisticResults" store:Type="Tables" />
+          <EntitySet Name="PrintLog" EntityType="Self.PrintLog" store:Type="Tables" />
+          <EntitySet Name="RNIStandard" EntityType="Self.RNIStandard" store:Type="Tables" />
+          <AssociationSet Name="FK_FoodIntakeRecord_0_0" Association="Self.FK_FoodIntakeRecord_0_0">
+            <End Role="CustomerInputRecord" EntitySet="CustomerInputRecord" />
+            <End Role="FoodIntakeRecord" EntitySet="FoodIntakeRecord" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FoodNutritions_0_0" Association="Self.FK_FoodNutritions_0_0">
+            <End Role="NuritiveElement" EntitySet="NuritiveElement" />
+            <End Role="FoodNutritions" EntitySet="FoodNutritions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FoodNutritions_1_0" Association="Self.FK_FoodNutritions_1_0">
+            <End Role="FoodClass" EntitySet="FoodClass" />
+            <End Role="FoodNutritions" EntitySet="FoodNutritions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FoodStaticResult_0_0" Association="Self.FK_FoodStaticResult_0_0">
+            <End Role="CustomerInputRecord" EntitySet="CustomerInputRecord" />
+            <End Role="FoodStaticResult" EntitySet="FoodStaticResult" />
+          </AssociationSet>
+          <AssociationSet Name="FK_NutritionStatisticResults_0_0" Association="Self.FK_NutritionStatisticResults_0_0">
+            <End Role="CustomerInputRecord" EntitySet="CustomerInputRecord" />
+            <End Role="NutritionStatisticResults" EntitySet="NutritionStatisticResults" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="myDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="CustomerInfo">
+          <Key>
+            <PropertyRef Name="MyID" />
+          </Key>
+          <Property Name="MyID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="QueueID" Type="Int64" />
+          <Property Name="HealthBookID" Type="Int64" />
+          <Property Name="name" Type="String" MaxLength="256" FixedLength="true" Unicode="false" />
+          <Property Name="birthday" Type="DateTime" />
+          <Property Name="GestationalWeek" Type="Int64" />
+          <Property Name="Height" Type="Double" />
+          <Property Name="beforeWeight" Type="Double" />
+          <Property Name="currentWeight" Type="Double" />
+        </EntityType>
+        <EntityType Name="CustomerInputRecord">
+          <Key>
+            <PropertyRef Name="MyID" />
+          </Key>
+          <Property Name="MyID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CustomerID" Type="Int64" Nullable="false" />
+          <Property Name="InvestigationDate" Type="DateTime" />
+          <Property Name="cuurentWeight" Type="Double" />
+          <Property Name="InvestigatorID" Type="Int64" />
+          <Property Name="InvestigatorName" Type="String" MaxLength="256" FixedLength="true" Unicode="false" />
+          <Property Name="AuditorID" Type="Int64" />
+          <Property Name="AuditorName" Type="String" MaxLength="256" FixedLength="true" Unicode="false" />
+          <Property Name="IsInputFinish" Type="Int16" />
+          <NavigationProperty Name="FoodIntakeRecords" Relationship="Self.FK_FoodIntakeRecord_0_0" FromRole="CustomerInputRecord" ToRole="FoodIntakeRecord" />
+          <NavigationProperty Name="FoodStaticResults" Relationship="Self.FK_FoodStaticResult_0_0" FromRole="CustomerInputRecord" ToRole="FoodStaticResult" />
+          <NavigationProperty Name="NutritionStatisticResults" Relationship="Self.FK_NutritionStatisticResults_0_0" FromRole="CustomerInputRecord" ToRole="NutritionStatisticResults" />
+        </EntityType>
+        <EntityType Name="DataTransferRecord">
+          <Key>
+            <PropertyRef Name="MyID" />
+          </Key>
+          <Property Name="MyID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="OperatorID" Type="Int64" />
+          <Property Name="OperatorName" Type="String" MaxLength="256" FixedLength="true" Unicode="false" />
+          <Property Name="TransferKind" Type="Int64" />
+          <Property Name="TransferDateTime" Type="DateTime" />
+          <Property Name="ExcuteTime" Type="DateTime" />
+          <Property Name="ExcuteResult" Type="Int16" />
+        </EntityType>
+        <EntityType Name="Doctor">
+          <Key>
+            <PropertyRef Name="MyID" />
+          </Key>
+          <Property Name="MyID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DoctorName" Type="String" MaxLength="256" FixedLength="true" Unicode="false" />
+        </EntityType>
+        <EntityType Name="FoodClass">
+          <Key>
+            <PropertyRef Name="MyID" />
+          </Key>
+          <Property Name="MyID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FoodClassName" Type="String" MaxLength="256" FixedLength="true" Unicode="false" />
+          <Property Name="ParentID" Type="Int64" />
+          <Property Name="ParentName" Type="String" MaxLength="256" FixedLength="true" Unicode="false" />
+          <Property Name="Percent" Type="Int64" />
+          <Property Name="Edible" Type="Int64" />
+          <Property Name="RecordMode" Type="Int64" />
+          <Property Name="TypicalFood" Type="String" MaxLength="256" FixedLength="true" Unicode="false" />
+          <Property Name="FoodIndex" Type="String" MaxLength="256" FixedLength="true" Unicode="false" />
+          <Property Name="FoodUnit" Type="String" MaxLength="256" FixedLength="true" Unicode="false" />
+          <Property Name="needInput" Type="Int16" />
+          <NavigationProperty Name="FoodNutritions" Relationship="Self.FK_FoodNutritions_1_0" FromRole="FoodClass" ToRole="FoodNutritions" />
+        </EntityType>
+        <EntityType Name="FoodIntakeRecord">
+          <Key>
+            <PropertyRef Name="MyID" />
+          </Key>
+          <Property Name="MyID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CustomerInputRecordID" Type="Int64" />
+          <Property Name="FoodClassID" Type="Int64" Nullable="false" />
+          <Property Name="IntakeFrequency" Type="Int64" />
+          <Property Name="Intake" Type="Int64" />
+          <Property Name="AverageADay" Type="Double" />
+          <Property Name="TypicalAverageADay" Type="Double" />
+          <NavigationProperty Name="CustomerInputRecord" Relationship="Self.FK_FoodIntakeRecord_0_0" FromRole="FoodIntakeRecord" ToRole="CustomerInputRecord" />
+        </EntityType>
+        <EntityType Name="FoodNutrition">
+          <Key>
+            <PropertyRef Name="MyID" />
+          </Key>
+          <Property Name="MyID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FoodClassID" Type="Int64" Nullable="false" />
+          <Property Name="NutritionElementID" Type="Int64" Nullable="false" />
+          <Property Name="NutritionValue" Type="Double" />
+          <NavigationProperty Name="FoodClass" Relationship="Self.FK_FoodNutritions_1_0" FromRole="FoodNutritions" ToRole="FoodClass" />
+          <NavigationProperty Name="NuritiveElement" Relationship="Self.FK_FoodNutritions_0_0" FromRole="FoodNutritions" ToRole="NuritiveElement" />
+        </EntityType>
+        <EntityType Name="FoodStatic">
+          <Key>
+            <PropertyRef Name="MyID" />
+          </Key>
+          <Property Name="MyID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FoodStaticName" Type="String" MaxLength="256" FixedLength="true" Unicode="false" />
+          <Property Name="FoodClassID" Type="Int64" />
+          <Property Name="FoodClassUnit" Type="String" MaxLength="256" FixedLength="true" Unicode="false" />
+        </EntityType>
+        <EntityType Name="FoodStaticResult">
+          <Key>
+            <PropertyRef Name="MyID" />
+          </Key>
+          <Property Name="MyID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CustomerInputRecordID" Type="Int64" />
+          <Property Name="FoodStaticName" Type="String" MaxLength="256" FixedLength="true" Unicode="false" />
+          <Property Name="FoodClassID" Type="Int64" />
+          <Property Name="FoodClassUnit" Type="String" MaxLength="256" FixedLength="true" Unicode="false" />
+          <NavigationProperty Name="CustomerInputRecord" Relationship="Self.FK_FoodStaticResult_0_0" FromRole="FoodStaticResult" ToRole="CustomerInputRecord" />
+        </EntityType>
+        <EntityType Name="NuritiveElement">
+          <Key>
+            <PropertyRef Name="MyID" />
+          </Key>
+          <Property Name="MyID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ElementName" Type="String" MaxLength="256" FixedLength="true" Unicode="false" />
+          <Property Name="ElementUnit" Type="String" MaxLength="256" FixedLength="true" Unicode="false" />
+          <Property Name="ShowOnReport" Type="Int16" />
+          <NavigationProperty Name="FoodNutritions" Relationship="Self.FK_FoodNutritions_0_0" FromRole="NuritiveElement" ToRole="FoodNutritions" />
+        </EntityType>
+        <EntityType Name="NutritionStatisticResult">
+          <Key>
+            <PropertyRef Name="MyID" />
+          </Key>
+          <Property Name="MyID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CustomerInputRecordID" Type="Int64" />
+          <Property Name="ElementName" Type="String" MaxLength="256" FixedLength="true" Unicode="false" />
+          <Property Name="ElementUnit" Type="String" MaxLength="256" FixedLength="true" Unicode="false" />
+          <Property Name="ShowOnReport" Type="Int16" />
+          <Property Name="ElementValue" Type="Double" />
+          <NavigationProperty Name="CustomerInputRecord" Relationship="Self.FK_NutritionStatisticResults_0_0" FromRole="NutritionStatisticResults" ToRole="CustomerInputRecord" />
+        </EntityType>
+        <EntityType Name="PrintLog">
+          <Key>
+            <PropertyRef Name="MyID" />
+          </Key>
+          <Property Name="MyID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="OperatorID" Type="Int64" />
+          <Property Name="OperatorName" Type="String" MaxLength="256" FixedLength="true" Unicode="false" />
+          <Property Name="PrintDateTime" Type="DateTime" />
+          <Property Name="PrintResult" Type="Int16" />
+        </EntityType>
+        <EntityType Name="RNIStandard">
+          <Key>
+            <PropertyRef Name="MyID" />
+          </Key>
+          <Property Name="MyID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Stage" Type="Int64" />
+          <Property Name="Kcal" Type="Double" />
+          <Property Name="Kj" Type="Double" />
+          <Property Name="Protein" Type="Double" />
+          <Property Name="Fat" Type="Double" />
+          <Property Name="Carbo" Type="Double" />
+          <Property Name="Fiber" Type="Double" />
+          <Property Name="Ca" Type="Double" />
+          <Property Name="P" Type="Double" />
+          <Property Name="K" Type="Double" />
+          <Property Name="Na" Type="Double" />
+          <Property Name="Mg" Type="Double" />
+          <Property Name="Fe" Type="Double" />
+          <Property Name="Zn" Type="Double" />
+          <Property Name="Se" Type="Double" />
+          <Property Name="Cu" Type="Double" />
+          <Property Name="Mn" Type="Double" />
+          <Property Name="Cholestl" Type="Double" />
+          <Property Name="Rentinol" Type="Double" />
+          <Property Name="Caroten" Type="Double" />
+          <Property Name="Vita" Type="Double" />
+          <Property Name="Vc" Type="Double" />
+          <Property Name="Ve" Type="Double" />
+          <Property Name="Thianmin" Type="Double" />
+          <Property Name="Riboflav" Type="Double" />
+          <Property Name="Niacin" Type="Double" />
+        </EntityType>
+        <Association Name="FK_FoodIntakeRecord_0_0">
+          <End Role="CustomerInputRecord" Type="Self.CustomerInputRecord" Multiplicity="0..1" />
+          <End Role="FoodIntakeRecord" Type="Self.FoodIntakeRecord" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CustomerInputRecord">
+              <PropertyRef Name="MyID" />
+            </Principal>
+            <Dependent Role="FoodIntakeRecord">
+              <PropertyRef Name="CustomerInputRecordID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FoodStaticResult_0_0">
+          <End Role="CustomerInputRecord" Type="Self.CustomerInputRecord" Multiplicity="0..1" />
+          <End Role="FoodStaticResult" Type="Self.FoodStaticResult" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CustomerInputRecord">
+              <PropertyRef Name="MyID" />
+            </Principal>
+            <Dependent Role="FoodStaticResult">
+              <PropertyRef Name="CustomerInputRecordID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_NutritionStatisticResults_0_0">
+          <End Role="CustomerInputRecord" Type="Self.CustomerInputRecord" Multiplicity="0..1" />
+          <End Role="NutritionStatisticResults" Type="Self.NutritionStatisticResult" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CustomerInputRecord">
+              <PropertyRef Name="MyID" />
+            </Principal>
+            <Dependent Role="NutritionStatisticResults">
+              <PropertyRef Name="CustomerInputRecordID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FoodNutritions_1_0">
+          <End Role="FoodClass" Type="Self.FoodClass" Multiplicity="1" />
+          <End Role="FoodNutritions" Type="Self.FoodNutrition" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FoodClass">
+              <PropertyRef Name="MyID" />
+            </Principal>
+            <Dependent Role="FoodNutritions">
+              <PropertyRef Name="FoodClassID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FoodNutritions_0_0">
+          <End Role="NuritiveElement" Type="Self.NuritiveElement" Multiplicity="1" />
+          <End Role="FoodNutritions" Type="Self.FoodNutrition" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NuritiveElement">
+              <PropertyRef Name="MyID" />
+            </Principal>
+            <Dependent Role="FoodNutritions">
+              <PropertyRef Name="NutritionElementID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="myDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="CustomerInfoes" EntityType="Self.CustomerInfo" />
+          <EntitySet Name="CustomerInputRecords" EntityType="Self.CustomerInputRecord" />
+          <EntitySet Name="DataTransferRecords" EntityType="Self.DataTransferRecord" />
+          <EntitySet Name="Doctors" EntityType="Self.Doctor" />
+          <EntitySet Name="FoodClasses" EntityType="Self.FoodClass" />
+          <EntitySet Name="FoodIntakeRecords" EntityType="Self.FoodIntakeRecord" />
+          <EntitySet Name="FoodNutritions" EntityType="Self.FoodNutrition" />
+          <EntitySet Name="FoodStatics" EntityType="Self.FoodStatic" />
+          <EntitySet Name="FoodStaticResults" EntityType="Self.FoodStaticResult" />
+          <EntitySet Name="NuritiveElements" EntityType="Self.NuritiveElement" />
+          <EntitySet Name="NutritionStatisticResults" EntityType="Self.NutritionStatisticResult" />
+          <EntitySet Name="PrintLogs" EntityType="Self.PrintLog" />
+          <EntitySet Name="RNIStandards" EntityType="Self.RNIStandard" />
+          <AssociationSet Name="FK_FoodIntakeRecord_0_0" Association="Self.FK_FoodIntakeRecord_0_0">
+            <End Role="CustomerInputRecord" EntitySet="CustomerInputRecords" />
+            <End Role="FoodIntakeRecord" EntitySet="FoodIntakeRecords" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FoodStaticResult_0_0" Association="Self.FK_FoodStaticResult_0_0">
+            <End Role="CustomerInputRecord" EntitySet="CustomerInputRecords" />
+            <End Role="FoodStaticResult" EntitySet="FoodStaticResults" />
+          </AssociationSet>
+          <AssociationSet Name="FK_NutritionStatisticResults_0_0" Association="Self.FK_NutritionStatisticResults_0_0">
+            <End Role="CustomerInputRecord" EntitySet="CustomerInputRecords" />
+            <End Role="NutritionStatisticResults" EntitySet="NutritionStatisticResults" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FoodNutritions_1_0" Association="Self.FK_FoodNutritions_1_0">
+            <End Role="FoodClass" EntitySet="FoodClasses" />
+            <End Role="FoodNutritions" EntitySet="FoodNutritions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FoodNutritions_0_0" Association="Self.FK_FoodNutritions_0_0">
+            <End Role="NuritiveElement" EntitySet="NuritiveElements" />
+            <End Role="FoodNutritions" EntitySet="FoodNutritions" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="myDBModelStoreContainer" CdmEntityContainer="myDBEntities">
+          <EntitySetMapping Name="CustomerInfoes">
+            <EntityTypeMapping TypeName="myDBModel.CustomerInfo">
+              <MappingFragment StoreEntitySet="CustomerInfo">
+                <ScalarProperty Name="MyID" ColumnName="MyID" />
+                <ScalarProperty Name="QueueID" ColumnName="QueueID" />
+                <ScalarProperty Name="HealthBookID" ColumnName="HealthBookID" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="birthday" ColumnName="birthday" />
+                <ScalarProperty Name="GestationalWeek" ColumnName="GestationalWeek" />
+                <ScalarProperty Name="Height" ColumnName="Height" />
+                <ScalarProperty Name="beforeWeight" ColumnName="beforeWeight" />
+                <ScalarProperty Name="currentWeight" ColumnName="currentWeight" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CustomerInputRecords">
+            <EntityTypeMapping TypeName="myDBModel.CustomerInputRecord">
+              <MappingFragment StoreEntitySet="CustomerInputRecord">
+                <ScalarProperty Name="MyID" ColumnName="MyID" />
+                <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
+                <ScalarProperty Name="InvestigationDate" ColumnName="InvestigationDate" />
+                <ScalarProperty Name="cuurentWeight" ColumnName="cuurentWeight" />
+                <ScalarProperty Name="InvestigatorID" ColumnName="InvestigatorID" />
+                <ScalarProperty Name="InvestigatorName" ColumnName="InvestigatorName" />
+                <ScalarProperty Name="AuditorID" ColumnName="AuditorID" />
+                <ScalarProperty Name="AuditorName" ColumnName="AuditorName" />
+                <ScalarProperty Name="IsInputFinish" ColumnName="IsInputFinish" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DataTransferRecords">
+            <EntityTypeMapping TypeName="myDBModel.DataTransferRecord">
+              <MappingFragment StoreEntitySet="DataTransferRecords">
+                <ScalarProperty Name="MyID" ColumnName="MyID" />
+                <ScalarProperty Name="OperatorID" ColumnName="OperatorID" />
+                <ScalarProperty Name="OperatorName" ColumnName="OperatorName" />
+                <ScalarProperty Name="TransferKind" ColumnName="TransferKind" />
+                <ScalarProperty Name="TransferDateTime" ColumnName="TransferDateTime" />
+                <ScalarProperty Name="ExcuteTime" ColumnName="ExcuteTime" />
+                <ScalarProperty Name="ExcuteResult" ColumnName="ExcuteResult" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Doctors">
+            <EntityTypeMapping TypeName="myDBModel.Doctor">
+              <MappingFragment StoreEntitySet="Doctors">
+                <ScalarProperty Name="MyID" ColumnName="MyID" />
+                <ScalarProperty Name="DoctorName" ColumnName="DoctorName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FoodClasses">
+            <EntityTypeMapping TypeName="myDBModel.FoodClass">
+              <MappingFragment StoreEntitySet="FoodClass">
+                <ScalarProperty Name="MyID" ColumnName="MyID" />
+                <ScalarProperty Name="FoodClassName" ColumnName="FoodClassName" />
+                <ScalarProperty Name="ParentID" ColumnName="ParentID" />
+                <ScalarProperty Name="ParentName" ColumnName="ParentName" />
+                <ScalarProperty Name="Percent" ColumnName="Percent" />
+                <ScalarProperty Name="Edible" ColumnName="Edible" />
+                <ScalarProperty Name="RecordMode" ColumnName="RecordMode" />
+                <ScalarProperty Name="TypicalFood" ColumnName="TypicalFood" />
+                <ScalarProperty Name="FoodIndex" ColumnName="FoodIndex" />
+                <ScalarProperty Name="FoodUnit" ColumnName="FoodUnit" />
+                <ScalarProperty Name="needInput" ColumnName="needInput" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FoodIntakeRecords">
+            <EntityTypeMapping TypeName="myDBModel.FoodIntakeRecord">
+              <MappingFragment StoreEntitySet="FoodIntakeRecord">
+                <ScalarProperty Name="MyID" ColumnName="MyID" />
+                <ScalarProperty Name="CustomerInputRecordID" ColumnName="CustomerInputRecordID" />
+                <ScalarProperty Name="FoodClassID" ColumnName="FoodClassID" />
+                <ScalarProperty Name="IntakeFrequency" ColumnName="IntakeFrequency" />
+                <ScalarProperty Name="Intake" ColumnName="Intake" />
+                <ScalarProperty Name="AverageADay" ColumnName="AverageADay" />
+                <ScalarProperty Name="TypicalAverageADay" ColumnName="TypicalAverageADay" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FoodNutritions">
+            <EntityTypeMapping TypeName="myDBModel.FoodNutrition">
+              <MappingFragment StoreEntitySet="FoodNutritions">
+                <ScalarProperty Name="MyID" ColumnName="MyID" />
+                <ScalarProperty Name="FoodClassID" ColumnName="FoodClassID" />
+                <ScalarProperty Name="NutritionElementID" ColumnName="NutritionElementID" />
+                <ScalarProperty Name="NutritionValue" ColumnName="NutritionValue" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FoodStatics">
+            <EntityTypeMapping TypeName="myDBModel.FoodStatic">
+              <MappingFragment StoreEntitySet="FoodStatic">
+                <ScalarProperty Name="MyID" ColumnName="MyID" />
+                <ScalarProperty Name="FoodStaticName" ColumnName="FoodStaticName" />
+                <ScalarProperty Name="FoodClassID" ColumnName="FoodClassID" />
+                <ScalarProperty Name="FoodClassUnit" ColumnName="FoodClassUnit" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FoodStaticResults">
+            <EntityTypeMapping TypeName="myDBModel.FoodStaticResult">
+              <MappingFragment StoreEntitySet="FoodStaticResult">
+                <ScalarProperty Name="MyID" ColumnName="MyID" />
+                <ScalarProperty Name="CustomerInputRecordID" ColumnName="CustomerInputRecordID" />
+                <ScalarProperty Name="FoodStaticName" ColumnName="FoodStaticName" />
+                <ScalarProperty Name="FoodClassID" ColumnName="FoodClassID" />
+                <ScalarProperty Name="FoodClassUnit" ColumnName="FoodClassUnit" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="NuritiveElements">
+            <EntityTypeMapping TypeName="myDBModel.NuritiveElement">
+              <MappingFragment StoreEntitySet="NuritiveElement">
+                <ScalarProperty Name="MyID" ColumnName="MyID" />
+                <ScalarProperty Name="ElementName" ColumnName="ElementName" />
+                <ScalarProperty Name="ElementUnit" ColumnName="ElementUnit" />
+                <ScalarProperty Name="ShowOnReport" ColumnName="ShowOnReport" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="NutritionStatisticResults">
+            <EntityTypeMapping TypeName="myDBModel.NutritionStatisticResult">
+              <MappingFragment StoreEntitySet="NutritionStatisticResults">
+                <ScalarProperty Name="MyID" ColumnName="MyID" />
+                <ScalarProperty Name="CustomerInputRecordID" ColumnName="CustomerInputRecordID" />
+                <ScalarProperty Name="ElementName" ColumnName="ElementName" />
+                <ScalarProperty Name="ElementUnit" ColumnName="ElementUnit" />
+                <ScalarProperty Name="ShowOnReport" ColumnName="ShowOnReport" />
+                <ScalarProperty Name="ElementValue" ColumnName="ElementValue" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PrintLogs">
+            <EntityTypeMapping TypeName="myDBModel.PrintLog">
+              <MappingFragment StoreEntitySet="PrintLog">
+                <ScalarProperty Name="MyID" ColumnName="MyID" />
+                <ScalarProperty Name="OperatorID" ColumnName="OperatorID" />
+                <ScalarProperty Name="OperatorName" ColumnName="OperatorName" />
+                <ScalarProperty Name="PrintDateTime" ColumnName="PrintDateTime" />
+                <ScalarProperty Name="PrintResult" ColumnName="PrintResult" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RNIStandards">
+            <EntityTypeMapping TypeName="myDBModel.RNIStandard">
+              <MappingFragment StoreEntitySet="RNIStandard">
+                <ScalarProperty Name="MyID" ColumnName="MyID" />
+                <ScalarProperty Name="Stage" ColumnName="Stage" />
+                <ScalarProperty Name="Kcal" ColumnName="Kcal" />
+                <ScalarProperty Name="Kj" ColumnName="Kj" />
+                <ScalarProperty Name="Protein" ColumnName="Protein" />
+                <ScalarProperty Name="Fat" ColumnName="Fat" />
+                <ScalarProperty Name="Carbo" ColumnName="Carbo" />
+                <ScalarProperty Name="Fiber" ColumnName="Fiber" />
+                <ScalarProperty Name="Ca" ColumnName="Ca" />
+                <ScalarProperty Name="P" ColumnName="P" />
+                <ScalarProperty Name="K" ColumnName="K" />
+                <ScalarProperty Name="Na" ColumnName="Na" />
+                <ScalarProperty Name="Mg" ColumnName="Mg" />
+                <ScalarProperty Name="Fe" ColumnName="Fe" />
+                <ScalarProperty Name="Zn" ColumnName="Zn" />
+                <ScalarProperty Name="Se" ColumnName="Se" />
+                <ScalarProperty Name="Cu" ColumnName="Cu" />
+                <ScalarProperty Name="Mn" ColumnName="Mn" />
+                <ScalarProperty Name="Cholestl" ColumnName="Cholestl" />
+                <ScalarProperty Name="Rentinol" ColumnName="Rentinol" />
+                <ScalarProperty Name="Caroten" ColumnName="Caroten" />
+                <ScalarProperty Name="Vita" ColumnName="Vita" />
+                <ScalarProperty Name="Vc" ColumnName="Vc" />
+                <ScalarProperty Name="Ve" ColumnName="Ve" />
+                <ScalarProperty Name="Thianmin" ColumnName="Thianmin" />
+                <ScalarProperty Name="Riboflav" ColumnName="Riboflav" />
+                <ScalarProperty Name="Niacin" ColumnName="Niacin" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="无" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
