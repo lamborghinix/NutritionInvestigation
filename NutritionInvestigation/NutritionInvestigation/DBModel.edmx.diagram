@@ -4,22 +4,22 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="f77c02881f39405f8f1931b2750f850f" Name="Diagram1">
-        <EntityTypeShape EntityType="myDBModel.CustomerInfo" Width="1.5" PointX="7.75" PointY="4.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="myDBModel.CustomerInputRecord" Width="1.5" PointX="0.75" PointY="3.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="myDBModel.DataTransferRecord" Width="1.5" PointX="5.75" PointY="8.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="myDBModel.Doctor" Width="1.5" PointX="7.75" PointY="8.75" IsExpanded="true" />
+      <Diagram DiagramId="c14699b68cb549d68236feca77e6f3a4" Name="Diagram1">
+        <EntityTypeShape EntityType="myDBModel.CustomerInfo" Width="1.5" PointX="7.75" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="myDBModel.CustomerInvestigationRecord" Width="1.5" PointX="0.75" PointY="4.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="myDBModel.DataTransferRecord" Width="1.5" PointX="9.75" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="myDBModel.Doctor" Width="1.5" PointX="7.75" PointY="9.75" IsExpanded="true" />
         <EntityTypeShape EntityType="myDBModel.FoodClass" Width="1.5" PointX="5.75" PointY="1" IsExpanded="true" />
         <EntityTypeShape EntityType="myDBModel.FoodIntakeRecord" Width="1.5" PointX="3" PointY="1.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="myDBModel.FoodNutrition" Width="1.5" PointX="8" PointY="1.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="myDBModel.FoodStatic" Width="1.5" PointX="9.75" PointY="4.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="myDBModel.FoodStaticResult" Width="1.5" PointX="3" PointY="4.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="myDBModel.NuritiveElement" Width="1.5" PointX="5.75" PointY="5.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="myDBModel.NutritionStatisticResult" Width="1.5" PointX="3" PointY="7.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="myDBModel.PrintLog" Width="1.5" PointX="9.75" PointY="7.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="myDBModel.RNIStandard" Width="1.5" PointX="0.75" PointY="10.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="myDBModel.FoodNutrition" Width="1.5" PointX="8" PointY="2.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="myDBModel.FoodStatistc" Width="1.5" PointX="9.75" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="myDBModel.FoodStatisticsResult" Width="1.5" PointX="3" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="myDBModel.NuritiveElement" Width="1.5" PointX="5.75" PointY="7.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="myDBModel.NutritionStatisticResult" Width="1.5" PointX="3" PointY="7.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="myDBModel.PrintLog" Width="1.5" PointX="10.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="myDBModel.RNIStandard" Width="1.5" PointX="0.75" PointY="11.75" IsExpanded="true" />
         <AssociationConnector Association="myDBModel.FK_FoodIntakeRecord_0_0" ManuallyRouted="false" />
-        <AssociationConnector Association="myDBModel.FK_FoodStaticResult_0_0" ManuallyRouted="false" />
+        <AssociationConnector Association="myDBModel.FK_FoodStatisticsResult_0_0" ManuallyRouted="false" />
         <AssociationConnector Association="myDBModel.FK_NutritionStatisticResults_0_0" ManuallyRouted="false" />
         <AssociationConnector Association="myDBModel.FK_FoodNutritions_1_0" ManuallyRouted="false" />
         <AssociationConnector Association="myDBModel.FK_FoodNutritions_0_0" ManuallyRouted="false" />

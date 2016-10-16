@@ -30,7 +30,12 @@ namespace NutritionInvestigation
         public string TypicalFood { get; set; }
         public string FoodIndex { get; set; }
         public string FoodUnit { get; set; }
-        public Nullable<short> needInput { get; set; }
+        public Nullable<bool> NeedInput { get; set; }
+        public string Description { get; set; }
+        public string ReferencePicture { get; set; }
+        public string ReferenceValue { get; set; }
+        public string UIConfig { get; set; }
+        public Nullable<long> SortID { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<FoodNutrition> FoodNutritions { get; set; }

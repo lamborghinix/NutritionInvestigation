@@ -12,30 +12,31 @@ namespace NutritionInvestigation
     using System;
     using System.Collections.Generic;
     
-    public partial class CustomerInputRecord
+    public partial class CustomerInvestigationRecord
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public CustomerInputRecord()
+        public CustomerInvestigationRecord()
         {
             this.FoodIntakeRecords = new HashSet<FoodIntakeRecord>();
-            this.FoodStaticResults = new HashSet<FoodStaticResult>();
+            this.FoodStatisticsResults = new HashSet<FoodStatisticsResult>();
             this.NutritionStatisticResults = new HashSet<NutritionStatisticResult>();
         }
     
         public long MyID { get; set; }
         public long CustomerID { get; set; }
+        public string QueueID { get; set; }
         public Nullable<System.DateTime> InvestigationDate { get; set; }
-        public Nullable<double> cuurentWeight { get; set; }
+        public Nullable<double> CurrentWeight { get; set; }
         public Nullable<long> InvestigatorID { get; set; }
         public string InvestigatorName { get; set; }
         public Nullable<long> AuditorID { get; set; }
         public string AuditorName { get; set; }
-        public Nullable<short> IsInputFinish { get; set; }
+        public Nullable<int> InvestigationStatus { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<FoodIntakeRecord> FoodIntakeRecords { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<FoodStaticResult> FoodStaticResults { get; set; }
+        public virtual ICollection<FoodStatisticsResult> FoodStatisticsResults { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<NutritionStatisticResult> NutritionStatisticResults { get; set; }
     }

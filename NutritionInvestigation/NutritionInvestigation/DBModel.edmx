@@ -10,31 +10,29 @@
             <PropertyRef Name="MyID" />
           </Key>
           <Property Name="MyID" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="QueueID" Type="integer" />
-          <Property Name="HealthBookID" Type="integer" />
-          <Property Name="name" Type="char" MaxLength="256" />
-          <Property Name="birthday" Type="datetime" />
+          <Property Name="HealthBookID" Type="char" MaxLength="256" />
+          <Property Name="Name" Type="char" MaxLength="256" />
+          <Property Name="Birthday" Type="datetime" />
           <Property Name="GestationalWeek" Type="integer" />
           <Property Name="Height" Type="real" />
-          <Property Name="beforeWeight" Type="real" />
-          <Property Name="currentWeight" Type="real" />
+          <Property Name="BeforeWeight" Type="real" />
+          <Property Name="CurrentWeight" Type="real" />
         </EntityType>
-        <EntityType Name="CustomerInputRecord">
+        <EntityType Name="CustomerInvestigationRecord">
           <Key>
             <PropertyRef Name="MyID" />
           </Key>
           <Property Name="MyID" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="CustomerID" Type="integer" Nullable="false" />
+          <Property Name="QueueID" Type="char" MaxLength="256" Nullable="false" />
           <Property Name="InvestigationDate" Type="datetime" />
-          <Property Name="cuurentWeight" Type="real" />
+          <Property Name="CurrentWeight" Type="real" />
           <Property Name="InvestigatorID" Type="integer" />
           <Property Name="InvestigatorName" Type="char" MaxLength="256" />
           <Property Name="AuditorID" Type="integer" />
           <Property Name="AuditorName" Type="char" MaxLength="256" />
-          <Property Name="IsInputFinish" Type="smallint" />
+          <Property Name="InvestigationStatus" Type="int" />
         </EntityType>
-        <!--生成过程中发现错误:
-警告 6005: 目标实体框架版本目前不支持数据类型“”；已排除表“main.DataTransferRecords”中的列“ExcuteRemark”。-->
         <EntityType Name="DataTransferRecords">
           <Key>
             <PropertyRef Name="MyID" />
@@ -45,7 +43,8 @@
           <Property Name="TransferKind" Type="integer" />
           <Property Name="TransferDateTime" Type="datetime" />
           <Property Name="ExcuteTime" Type="datetime" />
-          <Property Name="ExcuteResult" Type="smallint" />
+          <Property Name="ExcuteResult" Type="bit" />
+          <Property Name="ExcuteRemark" Type="nvarchar" MaxLength="2147483647" />
         </EntityType>
         <EntityType Name="Doctors">
           <Key>
@@ -54,10 +53,6 @@
           <Property Name="MyID" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="DoctorName" Type="char" MaxLength="256" />
         </EntityType>
-        <!--生成过程中发现错误:
-警告 6005: 目标实体框架版本目前不支持数据类型“”；已排除表“main.FoodClass”中的列“Description”。
-警告 6005: 目标实体框架版本目前不支持数据类型“”；已排除表“main.FoodClass”中的列“ReferencePicture”。
-警告 6005: 目标实体框架版本目前不支持数据类型“”；已排除表“main.FoodClass”中的列“ReferenceValue”。-->
         <EntityType Name="FoodClass">
           <Key>
             <PropertyRef Name="MyID" />
@@ -72,7 +67,12 @@
           <Property Name="TypicalFood" Type="char" MaxLength="256" />
           <Property Name="FoodIndex" Type="char" MaxLength="256" />
           <Property Name="FoodUnit" Type="char" MaxLength="256" />
-          <Property Name="needInput" Type="smallint" />
+          <Property Name="NeedInput" Type="bit" />
+          <Property Name="Description" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="ReferencePicture" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="ReferenceValue" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="UIConfig" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="SortID" Type="integer" />
         </EntityType>
         <EntityType Name="FoodIntakeRecord">
           <Key>
@@ -82,9 +82,10 @@
           <Property Name="CustomerInputRecordID" Type="integer" />
           <Property Name="FoodClassID" Type="integer" Nullable="false" />
           <Property Name="IntakeFrequency" Type="integer" />
-          <Property Name="Intake" Type="integer" />
+          <Property Name="Intake" Type="real" />
           <Property Name="AverageADay" Type="real" />
           <Property Name="TypicalAverageADay" Type="real" />
+          <Property Name="RecordMode" Type="integer" />
         </EntityType>
         <EntityType Name="FoodNutritions">
           <Key>
@@ -95,16 +96,17 @@
           <Property Name="NutritionElementID" Type="integer" Nullable="false" />
           <Property Name="NutritionValue" Type="real" />
         </EntityType>
-        <EntityType Name="FoodStatic">
+        <EntityType Name="FoodStatistcs">
           <Key>
             <PropertyRef Name="MyID" />
           </Key>
           <Property Name="MyID" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="FoodStaticName" Type="char" MaxLength="256" />
+          <Property Name="FoodStatisticsName" Type="char" MaxLength="256" />
           <Property Name="FoodClassID" Type="integer" />
           <Property Name="FoodClassUnit" Type="char" MaxLength="256" />
+          <Property Name="SortID" Type="integer" />
         </EntityType>
-        <EntityType Name="FoodStaticResult">
+        <EntityType Name="FoodStatisticsResult">
           <Key>
             <PropertyRef Name="MyID" />
           </Key>
@@ -113,6 +115,7 @@
           <Property Name="FoodStaticName" Type="char" MaxLength="256" />
           <Property Name="FoodClassID" Type="integer" />
           <Property Name="FoodClassUnit" Type="char" MaxLength="256" />
+          <Property Name="SortID" Type="integer" />
         </EntityType>
         <EntityType Name="NuritiveElement">
           <Key>
@@ -121,7 +124,8 @@
           <Property Name="MyID" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ElementName" Type="char" MaxLength="256" />
           <Property Name="ElementUnit" Type="char" MaxLength="256" />
-          <Property Name="ShowOnReport" Type="smallint" />
+          <Property Name="ShowOnReport" Type="bit" />
+          <Property Name="SortID" Type="integer" />
         </EntityType>
         <EntityType Name="NutritionStatisticResults">
           <Key>
@@ -131,11 +135,10 @@
           <Property Name="CustomerInputRecordID" Type="integer" />
           <Property Name="ElementName" Type="char" MaxLength="256" />
           <Property Name="ElementUnit" Type="char" MaxLength="256" />
-          <Property Name="ShowOnReport" Type="smallint" />
+          <Property Name="ShowOnReport" Type="bit" />
           <Property Name="ElementValue" Type="real" />
+          <Property Name="SortID" Type="integer" />
         </EntityType>
-        <!--生成过程中发现错误:
-警告 6005: 目标实体框架版本目前不支持数据类型“”；已排除表“main.PrintLog”中的列“PrintRemark”。-->
         <EntityType Name="PrintLog">
           <Key>
             <PropertyRef Name="MyID" />
@@ -144,7 +147,8 @@
           <Property Name="OperatorID" Type="integer" />
           <Property Name="OperatorName" Type="char" MaxLength="256" />
           <Property Name="PrintDateTime" Type="datetime" />
-          <Property Name="PrintResult" Type="smallint" />
+          <Property Name="PrintResult" Type="bit" />
+          <Property Name="PrintRemark" Type="nvarchar" MaxLength="2147483647" />
         </EntityType>
         <EntityType Name="RNIStandard">
           <Key>
@@ -179,10 +183,10 @@
           <Property Name="Niacin" Type="real" />
         </EntityType>
         <Association Name="FK_FoodIntakeRecord_0_0">
-          <End Role="CustomerInputRecord" Type="Self.CustomerInputRecord" Multiplicity="0..1" />
+          <End Role="CustomerInvestigationRecord" Type="Self.CustomerInvestigationRecord" Multiplicity="0..1" />
           <End Role="FoodIntakeRecord" Type="Self.FoodIntakeRecord" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="CustomerInputRecord">
+            <Principal Role="CustomerInvestigationRecord">
               <PropertyRef Name="MyID" />
             </Principal>
             <Dependent Role="FoodIntakeRecord">
@@ -214,23 +218,23 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_FoodStaticResult_0_0">
-          <End Role="CustomerInputRecord" Type="Self.CustomerInputRecord" Multiplicity="0..1" />
-          <End Role="FoodStaticResult" Type="Self.FoodStaticResult" Multiplicity="*" />
+        <Association Name="FK_FoodStatisticsResult_0_0">
+          <End Role="CustomerInvestigationRecord" Type="Self.CustomerInvestigationRecord" Multiplicity="0..1" />
+          <End Role="FoodStatisticsResult" Type="Self.FoodStatisticsResult" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="CustomerInputRecord">
+            <Principal Role="CustomerInvestigationRecord">
               <PropertyRef Name="MyID" />
             </Principal>
-            <Dependent Role="FoodStaticResult">
+            <Dependent Role="FoodStatisticsResult">
               <PropertyRef Name="CustomerInputRecordID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_NutritionStatisticResults_0_0">
-          <End Role="CustomerInputRecord" Type="Self.CustomerInputRecord" Multiplicity="0..1" />
+          <End Role="CustomerInvestigationRecord" Type="Self.CustomerInvestigationRecord" Multiplicity="0..1" />
           <End Role="NutritionStatisticResults" Type="Self.NutritionStatisticResults" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="CustomerInputRecord">
+            <Principal Role="CustomerInvestigationRecord">
               <PropertyRef Name="MyID" />
             </Principal>
             <Dependent Role="NutritionStatisticResults">
@@ -240,20 +244,20 @@
         </Association>
         <EntityContainer Name="myDBModelStoreContainer">
           <EntitySet Name="CustomerInfo" EntityType="Self.CustomerInfo" store:Type="Tables" />
-          <EntitySet Name="CustomerInputRecord" EntityType="Self.CustomerInputRecord" store:Type="Tables" />
+          <EntitySet Name="CustomerInvestigationRecord" EntityType="Self.CustomerInvestigationRecord" store:Type="Tables" />
           <EntitySet Name="DataTransferRecords" EntityType="Self.DataTransferRecords" store:Type="Tables" />
           <EntitySet Name="Doctors" EntityType="Self.Doctors" store:Type="Tables" />
           <EntitySet Name="FoodClass" EntityType="Self.FoodClass" store:Type="Tables" />
           <EntitySet Name="FoodIntakeRecord" EntityType="Self.FoodIntakeRecord" store:Type="Tables" />
           <EntitySet Name="FoodNutritions" EntityType="Self.FoodNutritions" store:Type="Tables" />
-          <EntitySet Name="FoodStatic" EntityType="Self.FoodStatic" store:Type="Tables" />
-          <EntitySet Name="FoodStaticResult" EntityType="Self.FoodStaticResult" store:Type="Tables" />
+          <EntitySet Name="FoodStatistcs" EntityType="Self.FoodStatistcs" store:Type="Tables" />
+          <EntitySet Name="FoodStatisticsResult" EntityType="Self.FoodStatisticsResult" store:Type="Tables" />
           <EntitySet Name="NuritiveElement" EntityType="Self.NuritiveElement" store:Type="Tables" />
           <EntitySet Name="NutritionStatisticResults" EntityType="Self.NutritionStatisticResults" store:Type="Tables" />
           <EntitySet Name="PrintLog" EntityType="Self.PrintLog" store:Type="Tables" />
           <EntitySet Name="RNIStandard" EntityType="Self.RNIStandard" store:Type="Tables" />
           <AssociationSet Name="FK_FoodIntakeRecord_0_0" Association="Self.FK_FoodIntakeRecord_0_0">
-            <End Role="CustomerInputRecord" EntitySet="CustomerInputRecord" />
+            <End Role="CustomerInvestigationRecord" EntitySet="CustomerInvestigationRecord" />
             <End Role="FoodIntakeRecord" EntitySet="FoodIntakeRecord" />
           </AssociationSet>
           <AssociationSet Name="FK_FoodNutritions_0_0" Association="Self.FK_FoodNutritions_0_0">
@@ -264,12 +268,12 @@
             <End Role="FoodClass" EntitySet="FoodClass" />
             <End Role="FoodNutritions" EntitySet="FoodNutritions" />
           </AssociationSet>
-          <AssociationSet Name="FK_FoodStaticResult_0_0" Association="Self.FK_FoodStaticResult_0_0">
-            <End Role="CustomerInputRecord" EntitySet="CustomerInputRecord" />
-            <End Role="FoodStaticResult" EntitySet="FoodStaticResult" />
+          <AssociationSet Name="FK_FoodStatisticsResult_0_0" Association="Self.FK_FoodStatisticsResult_0_0">
+            <End Role="CustomerInvestigationRecord" EntitySet="CustomerInvestigationRecord" />
+            <End Role="FoodStatisticsResult" EntitySet="FoodStatisticsResult" />
           </AssociationSet>
           <AssociationSet Name="FK_NutritionStatisticResults_0_0" Association="Self.FK_NutritionStatisticResults_0_0">
-            <End Role="CustomerInputRecord" EntitySet="CustomerInputRecord" />
+            <End Role="CustomerInvestigationRecord" EntitySet="CustomerInvestigationRecord" />
             <End Role="NutritionStatisticResults" EntitySet="NutritionStatisticResults" />
           </AssociationSet>
         </EntityContainer>
@@ -283,31 +287,31 @@
             <PropertyRef Name="MyID" />
           </Key>
           <Property Name="MyID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="QueueID" Type="Int64" />
-          <Property Name="HealthBookID" Type="Int64" />
-          <Property Name="name" Type="String" MaxLength="256" FixedLength="true" Unicode="false" />
-          <Property Name="birthday" Type="DateTime" />
+          <Property Name="HealthBookID" Type="String" MaxLength="256" FixedLength="true" Unicode="false" />
+          <Property Name="Name" Type="String" MaxLength="256" FixedLength="true" Unicode="false" />
+          <Property Name="Birthday" Type="DateTime" />
           <Property Name="GestationalWeek" Type="Int64" />
           <Property Name="Height" Type="Double" />
-          <Property Name="beforeWeight" Type="Double" />
-          <Property Name="currentWeight" Type="Double" />
+          <Property Name="BeforeWeight" Type="Double" />
+          <Property Name="CurrentWeight" Type="Double" />
         </EntityType>
-        <EntityType Name="CustomerInputRecord">
+        <EntityType Name="CustomerInvestigationRecord">
           <Key>
             <PropertyRef Name="MyID" />
           </Key>
           <Property Name="MyID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="CustomerID" Type="Int64" Nullable="false" />
+          <Property Name="QueueID" Type="String" MaxLength="256" FixedLength="true" Unicode="false" Nullable="false" />
           <Property Name="InvestigationDate" Type="DateTime" />
-          <Property Name="cuurentWeight" Type="Double" />
+          <Property Name="CurrentWeight" Type="Double" />
           <Property Name="InvestigatorID" Type="Int64" />
           <Property Name="InvestigatorName" Type="String" MaxLength="256" FixedLength="true" Unicode="false" />
           <Property Name="AuditorID" Type="Int64" />
           <Property Name="AuditorName" Type="String" MaxLength="256" FixedLength="true" Unicode="false" />
-          <Property Name="IsInputFinish" Type="Int16" />
-          <NavigationProperty Name="FoodIntakeRecords" Relationship="Self.FK_FoodIntakeRecord_0_0" FromRole="CustomerInputRecord" ToRole="FoodIntakeRecord" />
-          <NavigationProperty Name="FoodStaticResults" Relationship="Self.FK_FoodStaticResult_0_0" FromRole="CustomerInputRecord" ToRole="FoodStaticResult" />
-          <NavigationProperty Name="NutritionStatisticResults" Relationship="Self.FK_NutritionStatisticResults_0_0" FromRole="CustomerInputRecord" ToRole="NutritionStatisticResults" />
+          <Property Name="InvestigationStatus" Type="Int32" />
+          <NavigationProperty Name="FoodIntakeRecords" Relationship="Self.FK_FoodIntakeRecord_0_0" FromRole="CustomerInvestigationRecord" ToRole="FoodIntakeRecord" />
+          <NavigationProperty Name="FoodStatisticsResults" Relationship="Self.FK_FoodStatisticsResult_0_0" FromRole="CustomerInvestigationRecord" ToRole="FoodStatisticsResult" />
+          <NavigationProperty Name="NutritionStatisticResults" Relationship="Self.FK_NutritionStatisticResults_0_0" FromRole="CustomerInvestigationRecord" ToRole="NutritionStatisticResults" />
         </EntityType>
         <EntityType Name="DataTransferRecord">
           <Key>
@@ -319,7 +323,8 @@
           <Property Name="TransferKind" Type="Int64" />
           <Property Name="TransferDateTime" Type="DateTime" />
           <Property Name="ExcuteTime" Type="DateTime" />
-          <Property Name="ExcuteResult" Type="Int16" />
+          <Property Name="ExcuteResult" Type="Boolean" />
+          <Property Name="ExcuteRemark" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Doctor">
           <Key>
@@ -342,7 +347,12 @@
           <Property Name="TypicalFood" Type="String" MaxLength="256" FixedLength="true" Unicode="false" />
           <Property Name="FoodIndex" Type="String" MaxLength="256" FixedLength="true" Unicode="false" />
           <Property Name="FoodUnit" Type="String" MaxLength="256" FixedLength="true" Unicode="false" />
-          <Property Name="needInput" Type="Int16" />
+          <Property Name="NeedInput" Type="Boolean" />
+          <Property Name="Description" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="ReferencePicture" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="ReferenceValue" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="UIConfig" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="SortID" Type="Int64" />
           <NavigationProperty Name="FoodNutritions" Relationship="Self.FK_FoodNutritions_1_0" FromRole="FoodClass" ToRole="FoodNutritions" />
         </EntityType>
         <EntityType Name="FoodIntakeRecord">
@@ -353,10 +363,11 @@
           <Property Name="CustomerInputRecordID" Type="Int64" />
           <Property Name="FoodClassID" Type="Int64" Nullable="false" />
           <Property Name="IntakeFrequency" Type="Int64" />
-          <Property Name="Intake" Type="Int64" />
+          <Property Name="Intake" Type="Double" />
           <Property Name="AverageADay" Type="Double" />
           <Property Name="TypicalAverageADay" Type="Double" />
-          <NavigationProperty Name="CustomerInputRecord" Relationship="Self.FK_FoodIntakeRecord_0_0" FromRole="FoodIntakeRecord" ToRole="CustomerInputRecord" />
+          <Property Name="RecordMode" Type="Int64" />
+          <NavigationProperty Name="CustomerInvestigationRecord" Relationship="Self.FK_FoodIntakeRecord_0_0" FromRole="FoodIntakeRecord" ToRole="CustomerInvestigationRecord" />
         </EntityType>
         <EntityType Name="FoodNutrition">
           <Key>
@@ -369,16 +380,17 @@
           <NavigationProperty Name="FoodClass" Relationship="Self.FK_FoodNutritions_1_0" FromRole="FoodNutritions" ToRole="FoodClass" />
           <NavigationProperty Name="NuritiveElement" Relationship="Self.FK_FoodNutritions_0_0" FromRole="FoodNutritions" ToRole="NuritiveElement" />
         </EntityType>
-        <EntityType Name="FoodStatic">
+        <EntityType Name="FoodStatistc">
           <Key>
             <PropertyRef Name="MyID" />
           </Key>
           <Property Name="MyID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="FoodStaticName" Type="String" MaxLength="256" FixedLength="true" Unicode="false" />
+          <Property Name="FoodStatisticsName" Type="String" MaxLength="256" FixedLength="true" Unicode="false" />
           <Property Name="FoodClassID" Type="Int64" />
           <Property Name="FoodClassUnit" Type="String" MaxLength="256" FixedLength="true" Unicode="false" />
+          <Property Name="SortID" Type="Int64" />
         </EntityType>
-        <EntityType Name="FoodStaticResult">
+        <EntityType Name="FoodStatisticsResult">
           <Key>
             <PropertyRef Name="MyID" />
           </Key>
@@ -387,7 +399,8 @@
           <Property Name="FoodStaticName" Type="String" MaxLength="256" FixedLength="true" Unicode="false" />
           <Property Name="FoodClassID" Type="Int64" />
           <Property Name="FoodClassUnit" Type="String" MaxLength="256" FixedLength="true" Unicode="false" />
-          <NavigationProperty Name="CustomerInputRecord" Relationship="Self.FK_FoodStaticResult_0_0" FromRole="FoodStaticResult" ToRole="CustomerInputRecord" />
+          <Property Name="SortID" Type="Int64" />
+          <NavigationProperty Name="CustomerInvestigationRecord" Relationship="Self.FK_FoodStatisticsResult_0_0" FromRole="FoodStatisticsResult" ToRole="CustomerInvestigationRecord" />
         </EntityType>
         <EntityType Name="NuritiveElement">
           <Key>
@@ -396,7 +409,8 @@
           <Property Name="MyID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="ElementName" Type="String" MaxLength="256" FixedLength="true" Unicode="false" />
           <Property Name="ElementUnit" Type="String" MaxLength="256" FixedLength="true" Unicode="false" />
-          <Property Name="ShowOnReport" Type="Int16" />
+          <Property Name="ShowOnReport" Type="Boolean" />
+          <Property Name="SortID" Type="Int64" />
           <NavigationProperty Name="FoodNutritions" Relationship="Self.FK_FoodNutritions_0_0" FromRole="NuritiveElement" ToRole="FoodNutritions" />
         </EntityType>
         <EntityType Name="NutritionStatisticResult">
@@ -407,9 +421,10 @@
           <Property Name="CustomerInputRecordID" Type="Int64" />
           <Property Name="ElementName" Type="String" MaxLength="256" FixedLength="true" Unicode="false" />
           <Property Name="ElementUnit" Type="String" MaxLength="256" FixedLength="true" Unicode="false" />
-          <Property Name="ShowOnReport" Type="Int16" />
+          <Property Name="ShowOnReport" Type="Boolean" />
           <Property Name="ElementValue" Type="Double" />
-          <NavigationProperty Name="CustomerInputRecord" Relationship="Self.FK_NutritionStatisticResults_0_0" FromRole="NutritionStatisticResults" ToRole="CustomerInputRecord" />
+          <Property Name="SortID" Type="Int64" />
+          <NavigationProperty Name="CustomerInvestigationRecord" Relationship="Self.FK_NutritionStatisticResults_0_0" FromRole="NutritionStatisticResults" ToRole="CustomerInvestigationRecord" />
         </EntityType>
         <EntityType Name="PrintLog">
           <Key>
@@ -419,7 +434,8 @@
           <Property Name="OperatorID" Type="Int64" />
           <Property Name="OperatorName" Type="String" MaxLength="256" FixedLength="true" Unicode="false" />
           <Property Name="PrintDateTime" Type="DateTime" />
-          <Property Name="PrintResult" Type="Int16" />
+          <Property Name="PrintResult" Type="Boolean" />
+          <Property Name="PrintRemark" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="RNIStandard">
           <Key>
@@ -454,10 +470,10 @@
           <Property Name="Niacin" Type="Double" />
         </EntityType>
         <Association Name="FK_FoodIntakeRecord_0_0">
-          <End Role="CustomerInputRecord" Type="Self.CustomerInputRecord" Multiplicity="0..1" />
+          <End Role="CustomerInvestigationRecord" Type="Self.CustomerInvestigationRecord" Multiplicity="0..1" />
           <End Role="FoodIntakeRecord" Type="Self.FoodIntakeRecord" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="CustomerInputRecord">
+            <Principal Role="CustomerInvestigationRecord">
               <PropertyRef Name="MyID" />
             </Principal>
             <Dependent Role="FoodIntakeRecord">
@@ -465,23 +481,23 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_FoodStaticResult_0_0">
-          <End Role="CustomerInputRecord" Type="Self.CustomerInputRecord" Multiplicity="0..1" />
-          <End Role="FoodStaticResult" Type="Self.FoodStaticResult" Multiplicity="*" />
+        <Association Name="FK_FoodStatisticsResult_0_0">
+          <End Role="CustomerInvestigationRecord" Type="Self.CustomerInvestigationRecord" Multiplicity="0..1" />
+          <End Role="FoodStatisticsResult" Type="Self.FoodStatisticsResult" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="CustomerInputRecord">
+            <Principal Role="CustomerInvestigationRecord">
               <PropertyRef Name="MyID" />
             </Principal>
-            <Dependent Role="FoodStaticResult">
+            <Dependent Role="FoodStatisticsResult">
               <PropertyRef Name="CustomerInputRecordID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_NutritionStatisticResults_0_0">
-          <End Role="CustomerInputRecord" Type="Self.CustomerInputRecord" Multiplicity="0..1" />
+          <End Role="CustomerInvestigationRecord" Type="Self.CustomerInvestigationRecord" Multiplicity="0..1" />
           <End Role="NutritionStatisticResults" Type="Self.NutritionStatisticResult" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="CustomerInputRecord">
+            <Principal Role="CustomerInvestigationRecord">
               <PropertyRef Name="MyID" />
             </Principal>
             <Dependent Role="NutritionStatisticResults">
@@ -515,28 +531,28 @@
         </Association>
         <EntityContainer Name="myDBEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="CustomerInfoes" EntityType="Self.CustomerInfo" />
-          <EntitySet Name="CustomerInputRecords" EntityType="Self.CustomerInputRecord" />
+          <EntitySet Name="CustomerInvestigationRecords" EntityType="Self.CustomerInvestigationRecord" />
           <EntitySet Name="DataTransferRecords" EntityType="Self.DataTransferRecord" />
           <EntitySet Name="Doctors" EntityType="Self.Doctor" />
           <EntitySet Name="FoodClasses" EntityType="Self.FoodClass" />
           <EntitySet Name="FoodIntakeRecords" EntityType="Self.FoodIntakeRecord" />
           <EntitySet Name="FoodNutritions" EntityType="Self.FoodNutrition" />
-          <EntitySet Name="FoodStatics" EntityType="Self.FoodStatic" />
-          <EntitySet Name="FoodStaticResults" EntityType="Self.FoodStaticResult" />
+          <EntitySet Name="FoodStatistcs" EntityType="Self.FoodStatistc" />
+          <EntitySet Name="FoodStatisticsResults" EntityType="Self.FoodStatisticsResult" />
           <EntitySet Name="NuritiveElements" EntityType="Self.NuritiveElement" />
           <EntitySet Name="NutritionStatisticResults" EntityType="Self.NutritionStatisticResult" />
           <EntitySet Name="PrintLogs" EntityType="Self.PrintLog" />
           <EntitySet Name="RNIStandards" EntityType="Self.RNIStandard" />
           <AssociationSet Name="FK_FoodIntakeRecord_0_0" Association="Self.FK_FoodIntakeRecord_0_0">
-            <End Role="CustomerInputRecord" EntitySet="CustomerInputRecords" />
+            <End Role="CustomerInvestigationRecord" EntitySet="CustomerInvestigationRecords" />
             <End Role="FoodIntakeRecord" EntitySet="FoodIntakeRecords" />
           </AssociationSet>
-          <AssociationSet Name="FK_FoodStaticResult_0_0" Association="Self.FK_FoodStaticResult_0_0">
-            <End Role="CustomerInputRecord" EntitySet="CustomerInputRecords" />
-            <End Role="FoodStaticResult" EntitySet="FoodStaticResults" />
+          <AssociationSet Name="FK_FoodStatisticsResult_0_0" Association="Self.FK_FoodStatisticsResult_0_0">
+            <End Role="CustomerInvestigationRecord" EntitySet="CustomerInvestigationRecords" />
+            <End Role="FoodStatisticsResult" EntitySet="FoodStatisticsResults" />
           </AssociationSet>
           <AssociationSet Name="FK_NutritionStatisticResults_0_0" Association="Self.FK_NutritionStatisticResults_0_0">
-            <End Role="CustomerInputRecord" EntitySet="CustomerInputRecords" />
+            <End Role="CustomerInvestigationRecord" EntitySet="CustomerInvestigationRecords" />
             <End Role="NutritionStatisticResults" EntitySet="NutritionStatisticResults" />
           </AssociationSet>
           <AssociationSet Name="FK_FoodNutritions_1_0" Association="Self.FK_FoodNutritions_1_0">
@@ -558,29 +574,29 @@
             <EntityTypeMapping TypeName="myDBModel.CustomerInfo">
               <MappingFragment StoreEntitySet="CustomerInfo">
                 <ScalarProperty Name="MyID" ColumnName="MyID" />
-                <ScalarProperty Name="QueueID" ColumnName="QueueID" />
                 <ScalarProperty Name="HealthBookID" ColumnName="HealthBookID" />
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="birthday" ColumnName="birthday" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Birthday" ColumnName="Birthday" />
                 <ScalarProperty Name="GestationalWeek" ColumnName="GestationalWeek" />
                 <ScalarProperty Name="Height" ColumnName="Height" />
-                <ScalarProperty Name="beforeWeight" ColumnName="beforeWeight" />
-                <ScalarProperty Name="currentWeight" ColumnName="currentWeight" />
+                <ScalarProperty Name="BeforeWeight" ColumnName="BeforeWeight" />
+                <ScalarProperty Name="CurrentWeight" ColumnName="CurrentWeight" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="CustomerInputRecords">
-            <EntityTypeMapping TypeName="myDBModel.CustomerInputRecord">
-              <MappingFragment StoreEntitySet="CustomerInputRecord">
+          <EntitySetMapping Name="CustomerInvestigationRecords">
+            <EntityTypeMapping TypeName="myDBModel.CustomerInvestigationRecord">
+              <MappingFragment StoreEntitySet="CustomerInvestigationRecord">
                 <ScalarProperty Name="MyID" ColumnName="MyID" />
                 <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
+                <ScalarProperty Name="QueueID" ColumnName="QueueID" />
                 <ScalarProperty Name="InvestigationDate" ColumnName="InvestigationDate" />
-                <ScalarProperty Name="cuurentWeight" ColumnName="cuurentWeight" />
+                <ScalarProperty Name="CurrentWeight" ColumnName="CurrentWeight" />
                 <ScalarProperty Name="InvestigatorID" ColumnName="InvestigatorID" />
                 <ScalarProperty Name="InvestigatorName" ColumnName="InvestigatorName" />
                 <ScalarProperty Name="AuditorID" ColumnName="AuditorID" />
                 <ScalarProperty Name="AuditorName" ColumnName="AuditorName" />
-                <ScalarProperty Name="IsInputFinish" ColumnName="IsInputFinish" />
+                <ScalarProperty Name="InvestigationStatus" ColumnName="InvestigationStatus" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -594,6 +610,7 @@
                 <ScalarProperty Name="TransferDateTime" ColumnName="TransferDateTime" />
                 <ScalarProperty Name="ExcuteTime" ColumnName="ExcuteTime" />
                 <ScalarProperty Name="ExcuteResult" ColumnName="ExcuteResult" />
+                <ScalarProperty Name="ExcuteRemark" ColumnName="ExcuteRemark" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -618,7 +635,12 @@
                 <ScalarProperty Name="TypicalFood" ColumnName="TypicalFood" />
                 <ScalarProperty Name="FoodIndex" ColumnName="FoodIndex" />
                 <ScalarProperty Name="FoodUnit" ColumnName="FoodUnit" />
-                <ScalarProperty Name="needInput" ColumnName="needInput" />
+                <ScalarProperty Name="NeedInput" ColumnName="NeedInput" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="ReferencePicture" ColumnName="ReferencePicture" />
+                <ScalarProperty Name="ReferenceValue" ColumnName="ReferenceValue" />
+                <ScalarProperty Name="UIConfig" ColumnName="UIConfig" />
+                <ScalarProperty Name="SortID" ColumnName="SortID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -632,6 +654,7 @@
                 <ScalarProperty Name="Intake" ColumnName="Intake" />
                 <ScalarProperty Name="AverageADay" ColumnName="AverageADay" />
                 <ScalarProperty Name="TypicalAverageADay" ColumnName="TypicalAverageADay" />
+                <ScalarProperty Name="RecordMode" ColumnName="RecordMode" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -645,24 +668,26 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="FoodStatics">
-            <EntityTypeMapping TypeName="myDBModel.FoodStatic">
-              <MappingFragment StoreEntitySet="FoodStatic">
+          <EntitySetMapping Name="FoodStatistcs">
+            <EntityTypeMapping TypeName="myDBModel.FoodStatistc">
+              <MappingFragment StoreEntitySet="FoodStatistcs">
                 <ScalarProperty Name="MyID" ColumnName="MyID" />
-                <ScalarProperty Name="FoodStaticName" ColumnName="FoodStaticName" />
+                <ScalarProperty Name="FoodStatisticsName" ColumnName="FoodStatisticsName" />
                 <ScalarProperty Name="FoodClassID" ColumnName="FoodClassID" />
                 <ScalarProperty Name="FoodClassUnit" ColumnName="FoodClassUnit" />
+                <ScalarProperty Name="SortID" ColumnName="SortID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="FoodStaticResults">
-            <EntityTypeMapping TypeName="myDBModel.FoodStaticResult">
-              <MappingFragment StoreEntitySet="FoodStaticResult">
+          <EntitySetMapping Name="FoodStatisticsResults">
+            <EntityTypeMapping TypeName="myDBModel.FoodStatisticsResult">
+              <MappingFragment StoreEntitySet="FoodStatisticsResult">
                 <ScalarProperty Name="MyID" ColumnName="MyID" />
                 <ScalarProperty Name="CustomerInputRecordID" ColumnName="CustomerInputRecordID" />
                 <ScalarProperty Name="FoodStaticName" ColumnName="FoodStaticName" />
                 <ScalarProperty Name="FoodClassID" ColumnName="FoodClassID" />
                 <ScalarProperty Name="FoodClassUnit" ColumnName="FoodClassUnit" />
+                <ScalarProperty Name="SortID" ColumnName="SortID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -673,6 +698,7 @@
                 <ScalarProperty Name="ElementName" ColumnName="ElementName" />
                 <ScalarProperty Name="ElementUnit" ColumnName="ElementUnit" />
                 <ScalarProperty Name="ShowOnReport" ColumnName="ShowOnReport" />
+                <ScalarProperty Name="SortID" ColumnName="SortID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -685,6 +711,7 @@
                 <ScalarProperty Name="ElementUnit" ColumnName="ElementUnit" />
                 <ScalarProperty Name="ShowOnReport" ColumnName="ShowOnReport" />
                 <ScalarProperty Name="ElementValue" ColumnName="ElementValue" />
+                <ScalarProperty Name="SortID" ColumnName="SortID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -696,6 +723,7 @@
                 <ScalarProperty Name="OperatorName" ColumnName="OperatorName" />
                 <ScalarProperty Name="PrintDateTime" ColumnName="PrintDateTime" />
                 <ScalarProperty Name="PrintResult" ColumnName="PrintResult" />
+                <ScalarProperty Name="PrintRemark" ColumnName="PrintRemark" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

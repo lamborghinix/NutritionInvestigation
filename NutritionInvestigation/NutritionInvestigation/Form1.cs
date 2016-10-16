@@ -31,5 +31,45 @@ namespace NutritionInvestigation
 
             MessageBox.Show("add data OK.");
         }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            myDBEntities context = new myDBEntities();
+            FoodClass myFoodClass;
+            var q = from u in context.FoodClasses
+                    where u.MyID == 1
+                    select u;
+            if(q!=null && q.Count()>0)
+            {
+                myFoodClass = q.First();
+                MessageBox.Show(myFoodClass.MyID.ToString());
+                context.FoodClasses.Remove(myFoodClass);
+                context.SaveChanges();
+            }
+            else
+            {
+                MessageBox.Show("not exsit.");
+            }
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            myDBEntities context = new myDBEntities();
+            FoodClass myFoodClass;
+            var q = from u in context.FoodClasses
+                    //where u.MyID == 1
+                    select u;
+            if (q != null && q.Count() > 0)
+            {
+                myFoodClass = q.ToList()[q.Count() - 1];
+                MessageBox.Show(myFoodClass.MyID.ToString());
+                myFoodClass.ParentName = "no name";
+                context.SaveChanges();
+            }
+            else
+            {
+                MessageBox.Show("not exsit.");
+            }
+        }
     }
 }

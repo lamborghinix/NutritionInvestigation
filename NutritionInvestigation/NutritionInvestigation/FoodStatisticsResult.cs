@@ -12,14 +12,15 @@ namespace NutritionInvestigation
     using System;
     using System.Collections.Generic;
     
-    public partial class FoodStaticResult
+    public partial class FoodStatisticsResult
     {
         public long MyID { get; set; }
         public Nullable<long> CustomerInputRecordID { get; set; }
         public string FoodStaticName { get; set; }
         public Nullable<long> FoodClassID { get; set; }
         public string FoodClassUnit { get; set; }
+        public Nullable<long> SortID { get; set; }
     
-        public virtual CustomerInputRecord CustomerInputRecord { get; set; }
+        public virtual CustomerInvestigationRecord CustomerInvestigationRecord { get; set; }
     }
 }

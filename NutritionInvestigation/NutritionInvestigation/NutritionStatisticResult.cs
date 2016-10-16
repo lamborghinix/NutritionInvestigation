@@ -18,9 +18,10 @@ namespace NutritionInvestigation
         public Nullable<long> CustomerInputRecordID { get; set; }
         public string ElementName { get; set; }
         public string ElementUnit { get; set; }
-        public Nullable<short> ShowOnReport { get; set; }
+        public Nullable<bool> ShowOnReport { get; set; }
         public Nullable<double> ElementValue { get; set; }
+        public Nullable<long> SortID { get; set; }
     
-        public virtual CustomerInputRecord CustomerInputRecord { get; set; }
+        public virtual CustomerInvestigationRecord CustomerInvestigationRecord { get; set; }
     }
 }

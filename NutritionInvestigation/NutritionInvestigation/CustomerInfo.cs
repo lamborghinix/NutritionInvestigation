@@ -15,13 +15,12 @@ namespace NutritionInvestigation
     public partial class CustomerInfo
     {
         public long MyID { get; set; }
-        public Nullable<long> QueueID { get; set; }
-        public Nullable<long> HealthBookID { get; set; }
-        public string name { get; set; }
-        public Nullable<System.DateTime> birthday { get; set; }
+        public string HealthBookID { get; set; }
+        public string Name { get; set; }
+        public Nullable<System.DateTime> Birthday { get; set; }
         public Nullable<long> GestationalWeek { get; set; }
         public Nullable<double> Height { get; set; }
-        public Nullable<double> beforeWeight { get; set; }
-        public Nullable<double> currentWeight { get; set; }
+        public Nullable<double> BeforeWeight { get; set; }
+        public Nullable<double> CurrentWeight { get; set; }
     }
 }

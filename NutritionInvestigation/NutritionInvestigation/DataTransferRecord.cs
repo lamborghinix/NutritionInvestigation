@@ -20,6 +20,7 @@ namespace NutritionInvestigation
         public Nullable<long> TransferKind { get; set; }
         public Nullable<System.DateTime> TransferDateTime { get; set; }
         public Nullable<System.DateTime> ExcuteTime { get; set; }
-        public Nullable<short> ExcuteResult { get; set; }
+        public Nullable<bool> ExcuteResult { get; set; }
+        public string ExcuteRemark { get; set; }
     }
 }

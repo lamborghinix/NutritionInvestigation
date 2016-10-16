@@ -26,14 +26,14 @@ namespace NutritionInvestigation
         }
     
         public virtual DbSet<CustomerInfo> CustomerInfoes { get; set; }
-        public virtual DbSet<CustomerInputRecord> CustomerInputRecords { get; set; }
+        public virtual DbSet<CustomerInvestigationRecord> CustomerInvestigationRecords { get; set; }
         public virtual DbSet<DataTransferRecord> DataTransferRecords { get; set; }
         public virtual DbSet<Doctor> Doctors { get; set; }
         public virtual DbSet<FoodClass> FoodClasses { get; set; }
         public virtual DbSet<FoodIntakeRecord> FoodIntakeRecords { get; set; }
         public virtual DbSet<FoodNutrition> FoodNutritions { get; set; }
-        public virtual DbSet<FoodStatic> FoodStatics { get; set; }
-        public virtual DbSet<FoodStaticResult> FoodStaticResults { get; set; }
+        public virtual DbSet<FoodStatistc> FoodStatistcs { get; set; }
+        public virtual DbSet<FoodStatisticsResult> FoodStatisticsResults { get; set; }
         public virtual DbSet<NuritiveElement> NuritiveElements { get; set; }
         public virtual DbSet<NutritionStatisticResult> NutritionStatisticResults { get; set; }
         public virtual DbSet<PrintLog> PrintLogs { get; set; }

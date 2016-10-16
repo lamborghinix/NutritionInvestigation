@@ -23,7 +23,8 @@ namespace NutritionInvestigation
         public long MyID { get; set; }
         public string ElementName { get; set; }
         public string ElementUnit { get; set; }
-        public Nullable<short> ShowOnReport { get; set; }
+        public Nullable<bool> ShowOnReport { get; set; }
+        public Nullable<long> SortID { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<FoodNutrition> FoodNutritions { get; set; }

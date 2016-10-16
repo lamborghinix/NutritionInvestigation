@@ -18,6 +18,7 @@ namespace NutritionInvestigation
         public Nullable<long> OperatorID { get; set; }
         public string OperatorName { get; set; }
         public Nullable<System.DateTime> PrintDateTime { get; set; }
-        public Nullable<short> PrintResult { get; set; }
+        public Nullable<bool> PrintResult { get; set; }
+        public string PrintRemark { get; set; }
     }
 }

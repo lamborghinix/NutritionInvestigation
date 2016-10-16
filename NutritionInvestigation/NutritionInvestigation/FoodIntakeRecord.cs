@@ -18,10 +18,11 @@ namespace NutritionInvestigation
         public Nullable<long> CustomerInputRecordID { get; set; }
         public long FoodClassID { get; set; }
         public Nullable<long> IntakeFrequency { get; set; }
-        public Nullable<long> Intake { get; set; }
+        public Nullable<double> Intake { get; set; }
         public Nullable<double> AverageADay { get; set; }
         public Nullable<double> TypicalAverageADay { get; set; }
+        public Nullable<long> RecordMode { get; set; }
     
-        public virtual CustomerInputRecord CustomerInputRecord { get; set; }
+        public virtual CustomerInvestigationRecord CustomerInvestigationRecord { get; set; }
     }
 }
