@@ -10,9 +10,16 @@ namespace NutritionInvestigation
     {
         InvestigateInputting =1,
         InvestigateInputOver =2,
-        GenerateReports=3,
-        Approved=4,
-        ApproveFailure =5
+        StatisticsFoodIntakeOver =3,
+        StatisticsNutritionResultOver = 4,
+        GenerateReports=5,
+        Approved=6,
+        ApproveFailure =7
+    }
+    enum RecordMode
+    {
+        Input =1,
+        Calculate =2
     }
     class Enum
     {

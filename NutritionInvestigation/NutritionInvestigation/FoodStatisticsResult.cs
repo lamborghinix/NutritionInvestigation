@@ -20,6 +20,7 @@ namespace NutritionInvestigation
         public Nullable<long> FoodClassID { get; set; }
         public string FoodClassUnit { get; set; }
         public Nullable<long> SortID { get; set; }
+        public Nullable<double> FoodClassStatisticsValue { get; set; }
     
         public virtual CustomerInvestigationRecord CustomerInvestigationRecord { get; set; }
     }

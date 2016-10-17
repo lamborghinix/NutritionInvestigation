@@ -21,7 +21,7 @@ namespace NutritionInvestigation
         public Nullable<double> Intake { get; set; }
         public Nullable<double> AverageADay { get; set; }
         public Nullable<double> TypicalAverageADay { get; set; }
-        public Nullable<long> RecordMode { get; set; }
+        public Nullable<int> RecordMode { get; set; }
     
         public virtual CustomerInvestigationRecord CustomerInvestigationRecord { get; set; }
     }

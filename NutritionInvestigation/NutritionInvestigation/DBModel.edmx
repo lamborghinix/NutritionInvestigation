@@ -63,7 +63,7 @@
           <Property Name="ParentName" Type="char" MaxLength="256" />
           <Property Name="Percent" Type="integer" />
           <Property Name="Edible" Type="integer" />
-          <Property Name="RecordMode" Type="integer" />
+          <Property Name="RecordMode" Type="int" />
           <Property Name="TypicalFood" Type="char" MaxLength="256" />
           <Property Name="FoodIndex" Type="char" MaxLength="256" />
           <Property Name="FoodUnit" Type="char" MaxLength="256" />
@@ -85,7 +85,7 @@
           <Property Name="Intake" Type="real" />
           <Property Name="AverageADay" Type="real" />
           <Property Name="TypicalAverageADay" Type="real" />
-          <Property Name="RecordMode" Type="integer" />
+          <Property Name="RecordMode" Type="int" />
         </EntityType>
         <EntityType Name="FoodNutritions">
           <Key>
@@ -116,6 +116,7 @@
           <Property Name="FoodClassID" Type="integer" />
           <Property Name="FoodClassUnit" Type="char" MaxLength="256" />
           <Property Name="SortID" Type="integer" />
+          <Property Name="FoodClassStatisticsValue" Type="real" />
         </EntityType>
         <EntityType Name="NuritiveElement">
           <Key>
@@ -343,7 +344,7 @@
           <Property Name="ParentName" Type="String" MaxLength="256" FixedLength="true" Unicode="false" />
           <Property Name="Percent" Type="Int64" />
           <Property Name="Edible" Type="Int64" />
-          <Property Name="RecordMode" Type="Int64" />
+          <Property Name="RecordMode" Type="Int32" />
           <Property Name="TypicalFood" Type="String" MaxLength="256" FixedLength="true" Unicode="false" />
           <Property Name="FoodIndex" Type="String" MaxLength="256" FixedLength="true" Unicode="false" />
           <Property Name="FoodUnit" Type="String" MaxLength="256" FixedLength="true" Unicode="false" />
@@ -366,7 +367,7 @@
           <Property Name="Intake" Type="Double" />
           <Property Name="AverageADay" Type="Double" />
           <Property Name="TypicalAverageADay" Type="Double" />
-          <Property Name="RecordMode" Type="Int64" />
+          <Property Name="RecordMode" Type="Int32" />
           <NavigationProperty Name="CustomerInvestigationRecord" Relationship="Self.FK_FoodIntakeRecord_0_0" FromRole="FoodIntakeRecord" ToRole="CustomerInvestigationRecord" />
         </EntityType>
         <EntityType Name="FoodNutrition">
@@ -400,6 +401,7 @@
           <Property Name="FoodClassID" Type="Int64" />
           <Property Name="FoodClassUnit" Type="String" MaxLength="256" FixedLength="true" Unicode="false" />
           <Property Name="SortID" Type="Int64" />
+          <Property Name="FoodClassStatisticsValue" Type="Double" />
           <NavigationProperty Name="CustomerInvestigationRecord" Relationship="Self.FK_FoodStatisticsResult_0_0" FromRole="FoodStatisticsResult" ToRole="CustomerInvestigationRecord" />
         </EntityType>
         <EntityType Name="NuritiveElement">
@@ -688,6 +690,7 @@
                 <ScalarProperty Name="FoodClassID" ColumnName="FoodClassID" />
                 <ScalarProperty Name="FoodClassUnit" ColumnName="FoodClassUnit" />
                 <ScalarProperty Name="SortID" ColumnName="SortID" />
+                <ScalarProperty Name="FoodClassStatisticsValue" ColumnName="FoodClassStatisticsValue" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -261,24 +261,25 @@ namespace NutritionInvestigation
             if (myInvestigationRecord!=null)
             {
                 myInvestigationRecord.FoodIntakeRecords.Add(newRecord);
+                int r;
                 try
                 {
-                    int r = DALDB.GetInstance().SaveChanges();
-                    if (r>0)
-                    {
-                        return true;
-                    }
-                    else
-                    {
-                        Debug.WriteLine("Add new Record {0} in Investigation {1} falure.", newRecord.FoodClassID.ToString(), queueID );
-                        Debug.WriteLine("SaveChanges return {0}.", r.ToString());
-                        return false;
-                    }
+                    r = DALDB.GetInstance().SaveChanges();
                 }
                 catch (Exception ex) 
                 {
                     Debug.WriteLine("Add new Record {0} in Investigation {1} falure.", newRecord.FoodClassID.ToString(), queueID);
                     Debug.WriteLine("Error message is {0}.", ex.ToString());
+                    return false;
+                }
+                if (r > 0)
+                {
+                    return true;
+                }
+                else
+                {
+                    Debug.WriteLine("Add new Record {0} in Investigation {1} falure.", newRecord.FoodClassID.ToString(), queueID);
+                    Debug.WriteLine("SaveChanges return {0}.", r.ToString());
                     return false;
                 }
             }
@@ -293,7 +294,7 @@ namespace NutritionInvestigation
         /// </summary>
         /// <param name="queueID"></param>
         /// <returns></returns>
-        public bool CheckFoodIntakeRecordComplete(string queueID)
+        public bool CheckAndUpdateFoodIntakeRecordComplete(string queueID)
         {
             CustomerInvestigationRecord myInvestigationRecord = GetInvestigationRecord(queueID);
             if (myInvestigationRecord != null)
@@ -302,7 +303,26 @@ namespace NutritionInvestigation
                 int HadInputCount = myInvestigationRecord.FoodIntakeRecords.Count();
                 if (FoodIntakeCount == HadInputCount)
                 {
+                    myInvestigationRecord.InvestigationStatus = (int)InvestigateStatus.InvestigateInputOver;
+                    int r;
+                    try
+                    {
+                        r = DALDB.GetInstance().SaveChanges();
+                    }
+                    catch (Exception ex)
+                    {
+                        Debug.WriteLine(" Update status of Investigate {0} to InvestigateStatus.InvestigateInputOver error. Error message is {1}.",
+                            queueID, ex.ToString());
+                        return false;
+                    }
+                    if(r>0)
                     return true;
+                    else
+                    {
+                        Debug.WriteLine(" Updat status of Investigate {0} to InvestigateStatus.InvestigateInputOver error. ");
+                        Debug.WriteLine(" Save changes return {0}.", r);
+                        return false;
+                    }
                 }
                 else
                 {
@@ -403,17 +423,173 @@ namespace NutritionInvestigation
             return null;
 
         }
-
+        /// <summary>
+        /// 统计食物摄入量
+        /// </summary>
+        /// <param name="queueID"></param>
+        /// <returns></returns>
         public bool StatisticsFoodIntake(string queueID)
         {
-            return false;
+            var p = from u in DALDB.GetInstance().FoodStatistcs
+                    group u by u.FoodStatisticsName;
+            var q = from u in DALDB.GetInstance().FoodIntakeRecords
+                    where u.CustomerInvestigationRecord.QueueID == queueID
+                    select u;
+            if(p!=null && p.Count()>0)
+            {
+                if(q!=null && q.Count()>0)
+                {
+                    CustomerInvestigationRecord myInvestigationRecord = q.First().CustomerInvestigationRecord;
+                    if(myInvestigationRecord.InvestigationStatus != (int)InvestigateStatus.InvestigateInputOver)
+                    {
+                        Debug.WriteLine("Investigation {0} havn't input over, can't do Statistics Action.", queueID);
+                        return false;
+                    }
+                    foreach (var gp in p)
+                    {
+                        FoodStatisticsResult myFoodStatisticsResult = new FoodStatisticsResult();
+                        myFoodStatisticsResult.CustomerInputRecordID = myInvestigationRecord.MyID;
+                        myFoodStatisticsResult.FoodClassID = gp.First().FoodClassID;
+                        myFoodStatisticsResult.FoodClassUnit = gp.First().FoodClassUnit;
+                        myFoodStatisticsResult.FoodStaticName = gp.First().FoodStatisticsName;
+                        myFoodStatisticsResult.SortID = gp.First().SortID;
+                        myFoodStatisticsResult.FoodClassStatisticsValue = 0;
+                        foreach (var item in gp)
+                        {
+                            foreach(var record in q)
+                            {
+                                if(record.FoodClassID == myFoodStatisticsResult.FoodClassID)
+                                {
+                                    myFoodStatisticsResult.FoodClassStatisticsValue += record.AverageADay;
+                                    break;
+                                }
+                            }
+                        }
+                        myInvestigationRecord.FoodStatisticsResults.Add(myFoodStatisticsResult);
+                        Debug.WriteLine("Investigation {0}, add food statistics info: food Class {1} have {2}.",
+                            queueID, myFoodStatisticsResult.FoodStaticName, myFoodStatisticsResult.FoodClassStatisticsValue);
+                    }
+                    myInvestigationRecord.InvestigationStatus = (int)InvestigateStatus.StatisticsFoodIntakeOver;
+                    int r;
+                    try
+                    {
+                        r = DALDB.GetInstance().SaveChanges();
+                    }
+                    catch (Exception ex)
+                    {
+                        Debug.WriteLine("Add new Food Class Statistics to DB error,  error info is {0}", ex.ToString());
+                        return false;
+                    }
+                    if (r > 0)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        Debug.WriteLine("Add new Food Class Statistics to DB error. ");
+                        Debug.WriteLine("Save changes return {0}.", r.ToString());
+                        return false;
+                    }
+                }
+                else
+                {
+                    Debug.WriteLine("have no food intake records, can't calculate.");
+                    return false;
+                }
+            }
+            else
+            {
+                Debug.WriteLine("have no food statistics info, can't calculate.");
+                return false;
+            }
+            
         }
-
+        /// <summary>
+        /// 统计营养摄入量
+        /// 方法实现还没写完。
+        /// </summary>
+        /// <param name="queueID"></param>
+        /// <returns></returns>
         public bool StatisticsNutritionIntake(string queueID)
         {
-            return false;
+            var p = from u in DALDB.GetInstance().FoodIntakeRecords
+                    where u.CustomerInvestigationRecord.QueueID == queueID
+                    select u;
+            if(p!=null && p.Count()>0)
+            {
+                CustomerInvestigationRecord myInvestigation = p.First().CustomerInvestigationRecord;
+                if(myInvestigation.InvestigationStatus < (int)InvestigateStatus.InvestigateInputOver )
+                {
+                    Debug.WriteLine("Input of Investigation {0} haven't been complete. can't calculate Nutrition Intake.", queueID);
+                    return false;
+                }
+                if(!CalcTypicalAverageIntake(queueID))
+                {
+                    Debug.WriteLine("Calculate Typical food average intake error. check Input and retry later.");
+                    return false;
+                }
+                //计算每种食物的营养
+                // 汇总每种食物的营养。
+                return true;
+            }
+            else
+            {
+                Debug.WriteLine("Can't get food intake records of investigation {0}, can't calculate Nutrition Intake.", queueID);
+                return false;
+            }
+            
         }
 
+        /// <summary>
+        /// 计算代表性食物平均每天摄入量。
+        /// 还没有完成，没有加入计算类的典型食物摄入量。
+        /// </summary>
+        /// <param name="queueID"></param>
+        private bool CalcTypicalAverageIntake(string queueID)
+        {
+            var p = from u in DALDB.GetInstance().FoodIntakeRecords
+                    where u.CustomerInvestigationRecord.QueueID == queueID
+                    select u;
+            var q = from u in DALDB.GetInstance().FoodClasses
+                    select u;
+            if (p!=null && p.Count()>0)
+            {
+                foreach(var u in p)
+                {
+                    if (u.RecordMode == (int)RecordMode.Input)
+                    {
+                        var o = (from v in q
+                                 where v.MyID == u.FoodClassID
+                                 select v).First();
+                        u.TypicalAverageADay = u.AverageADay * o.Percent / 100;
+                    }
+                }
+            }
+            else
+            {
+                Debug.WriteLine("no Food Intake Record of Investigation {0}.", queueID);
+                return false;
+            }
+            int r;
+            try
+            {
+                r = DALDB.GetInstance().SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("Save Typical food average intake Error. Error message is {0}.", ex.ToString());
+                throw;
+            }
+            if(r>0)
+            {
+                return true;
+            }
+            else
+            {
+                Debug.WriteLine("Save Typical food average intake error. save changes return {0}.", r.ToString());
+                return false;
+            }
+        }
 
     }
 }

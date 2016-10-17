@@ -26,7 +26,7 @@ namespace NutritionInvestigation
         public string ParentName { get; set; }
         public Nullable<long> Percent { get; set; }
         public Nullable<long> Edible { get; set; }
-        public Nullable<long> RecordMode { get; set; }
+        public Nullable<int> RecordMode { get; set; }
         public string TypicalFood { get; set; }
         public string FoodIndex { get; set; }
         public string FoodUnit { get; set; }
