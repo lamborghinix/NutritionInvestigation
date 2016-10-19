@@ -260,6 +260,17 @@ namespace NutritionInvestigation
             CustomerInvestigationRecord myInvestigationRecord = GetInvestigationRecord(queueID);
             if (myInvestigationRecord!=null)
             {
+                var p = from u in DALDB.GetInstance().FoodIntakeRecords
+                        where u.CustomerInvestigationRecord.QueueID == queueID
+                        select u;
+                foreach(var u in p)
+                {
+                    if(u.FoodClassID == newRecord.FoodClassID)
+                    {
+                        Debug.WriteLine("Exist Food class {0} in inputRecord, can't add record. ", u.FoodClassID);
+                        return false;
+                    }
+                }
                 myInvestigationRecord.FoodIntakeRecords.Add(newRecord);
                 int r;
                 try
@@ -396,7 +407,11 @@ namespace NutritionInvestigation
                 return null;
             }
         }
-
+        /// <summary>
+        /// 获取一个调查的营养统计结果。
+        /// </summary>
+        /// <param name="queueID"></param>
+        /// <returns></returns>
         public List<NutritionStatisticResult> GetNutritionStatisticsResult(string queueID)
         {
             var p = from u in DALDB.GetInstance().NutritionStatisticResults
@@ -529,8 +544,60 @@ namespace NutritionInvestigation
                     return false;
                 }
                 //计算每种食物的营养
-                // 汇总每种食物的营养。
-                return true;
+                var NutritionElements = from u in DALDB.GetInstance().NuritiveElements
+                                        select u;
+                var myFoodNutrition = from u in DALDB.GetInstance().FoodNutritions
+                                    select u;
+                foreach(var u in NutritionElements)
+                {
+                    NutritionStatisticResult newResult = new NutritionStatisticResult()
+                    {
+                        CustomerInputRecordID = myInvestigation.MyID,
+                        CustomerInvestigationRecord = myInvestigation,
+                        ElementName = u.ElementName,
+                        ElementUnit = u.ElementUnit,
+                        ElementValue = 0,
+                        ShowOnReport =u.ShowOnReport,
+                         SortID = u.SortID
+                    };
+                    myInvestigation.NutritionStatisticResults.Add(newResult);
+                }
+                foreach(var u in myFoodNutrition)
+                {
+                    var myFoodIntake = from v in p
+                                       where v.FoodClassID == u.FoodClassID
+                                       select v;
+                    if(myFoodIntake!=null && myFoodIntake.Count()==1)
+                    {
+                        foreach(var w in myInvestigation.NutritionStatisticResults)
+                        {
+                            if(w.ElementName == u.NuritiveElement.ElementName)
+                            {
+                                w.ElementValue += myFoodIntake.First().TypicalAverageADay * u.NutritionValue;
+                            }
+                        }
+                    }
+                }
+                //save changes.
+                int r;
+                try
+                {
+                    r = DALDB.GetInstance().SaveChanges();
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine("Save Food Nutrition Statistics info failure. exception info is {0}", ex.ToString());
+                    return false;
+                }
+                if(r>0)
+                {
+                    return true;
+                }
+                else
+                {
+                    Debug.WriteLine("Save Food Nutrition Statistics info failure, save changes return {0}.", r);
+                    return false;
+                }
             }
             else
             {
@@ -552,6 +619,7 @@ namespace NutritionInvestigation
                     select u;
             var q = from u in DALDB.GetInstance().FoodClasses
                     select u;
+            #region 计算录入食物类的代表性食物类平均每天摄入量
             if (p!=null && p.Count()>0)
             {
                 foreach(var u in p)
@@ -570,6 +638,46 @@ namespace NutritionInvestigation
                 Debug.WriteLine("no Food Intake Record of Investigation {0}.", queueID);
                 return false;
             }
+            #endregion
+            CustomerInvestigationRecord myInvestigation = p.First().CustomerInvestigationRecord;
+            #region 计算代表性食物类平均每天摄入量
+            var calcFoodClass = from u in DALDB.GetInstance().FoodClasses
+                                where u.NeedInput == false
+                                select u;
+            if (calcFoodClass != null && calcFoodClass.Count() > 0)
+            {
+                foreach (var t in calcFoodClass)
+                {
+                    double foodInputValue = -1;
+                    long parentID = (int)t.ParentID;
+                    foreach (var t2 in p)
+                    {
+                        if (t2.FoodClassID == parentID)
+                        {
+                            foodInputValue = (double)t2.AverageADay;
+                            break;
+                        }
+                    }
+                    if (foodInputValue == -1)
+                    {
+                        Debug.WriteLine("haven't found the parent food class {0} averageDay intake value.", t.ParentName);
+                        break;
+                    }
+                    FoodIntakeRecord newIntake = new FoodIntakeRecord()
+                    {
+                        AverageADay = 0,
+                        CustomerInputRecordID = myInvestigation.MyID,
+                        CustomerInvestigationRecord = myInvestigation,
+                        FoodClassID = t.MyID,
+                        Intake = 0,
+                        IntakeFrequency = 0,
+                        RecordMode = (int)RecordMode.Calculate,
+                        TypicalAverageADay = foodInputValue * t.Percent / 100
+                    };
+                    myInvestigation.FoodIntakeRecords.Add(newIntake);
+                }
+            }
+            #endregion
             int r;
             try
             {
