@@ -249,6 +249,33 @@ namespace NutritionInvestigation
                 
             }
         }
+
+        internal CustomerInfo GetCustomersInfo(long customerID)
+        {
+            CustomerInfo myCustomer;
+            var p = from u in DALDB.GetInstance().CustomerInfoes
+                    where u.MyID == customerID
+                    select u;
+            if(p!=null && p.Count()==1)
+            {
+                myCustomer = p.First();
+            }
+            else
+            {
+                myCustomer = null;
+            }
+            return myCustomer;
+        }
+
+        internal bool CheckInvestigationExist(string queueID,out CustomerInvestigationRecord myInvestigation)
+        {
+            myInvestigation = GetInvestigationRecord(queueID);
+            if (myInvestigation == null)
+                return false;
+            else
+                return true;
+        }
+
         /// <summary>
         /// 在一个调查记录中，增加一条饮食记录
         /// </summary>

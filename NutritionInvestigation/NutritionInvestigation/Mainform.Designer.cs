@@ -29,21 +29,21 @@
         private void InitializeComponent()
         {
             this.panel2 = new System.Windows.Forms.Panel();
+            this.btnNewInvestigation = new System.Windows.Forms.Button();
+            this.txtAuditor = new System.Windows.Forms.TextBox();
+            this.txtInvestigatorName = new System.Windows.Forms.TextBox();
+            this.txtInvestigationDate = new System.Windows.Forms.TextBox();
+            this.txtWeightNow = new System.Windows.Forms.TextBox();
+            this.txtWeightBefore = new System.Windows.Forms.TextBox();
+            this.txtHeight = new System.Windows.Forms.TextBox();
+            this.txtWeeks = new System.Windows.Forms.TextBox();
+            this.txtCustomerBirthday = new System.Windows.Forms.TextBox();
+            this.txtCustomerName = new System.Windows.Forms.TextBox();
+            this.txtHealthBookID = new System.Windows.Forms.TextBox();
+            this.txtQueueID = new System.Windows.Forms.TextBox();
             this.lblInvestigationCount = new System.Windows.Forms.Label();
             this.btnViewRecords = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.txtQueueID = new System.Windows.Forms.TextBox();
-            this.txtHealthBookID = new System.Windows.Forms.TextBox();
-            this.txtCustomerName = new System.Windows.Forms.TextBox();
-            this.txtCustomerBirthday = new System.Windows.Forms.TextBox();
-            this.txtWeeks = new System.Windows.Forms.TextBox();
-            this.txtHeight = new System.Windows.Forms.TextBox();
-            this.txtWeightBefore = new System.Windows.Forms.TextBox();
-            this.txtWeightNow = new System.Windows.Forms.TextBox();
-            this.txtInvestigationDate = new System.Windows.Forms.TextBox();
-            this.txtInvestigatorName = new System.Windows.Forms.TextBox();
-            this.txtAuditor = new System.Windows.Forms.TextBox();
-            this.btnNewInvestigation = new System.Windows.Forms.Button();
             this.panel2.SuspendLayout();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
@@ -67,6 +67,96 @@
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(1016, 800);
             this.panel2.TabIndex = 1;
+            // 
+            // btnNewInvestigation
+            // 
+            this.btnNewInvestigation.Location = new System.Drawing.Point(786, 716);
+            this.btnNewInvestigation.Name = "btnNewInvestigation";
+            this.btnNewInvestigation.Size = new System.Drawing.Size(159, 56);
+            this.btnNewInvestigation.TabIndex = 11;
+            this.btnNewInvestigation.Text = "开始测试";
+            this.btnNewInvestigation.UseVisualStyleBackColor = true;
+            this.btnNewInvestigation.Click += new System.EventHandler(this.btnNewInvestigation_Click);
+            // 
+            // txtAuditor
+            // 
+            this.txtAuditor.Location = new System.Drawing.Point(743, 605);
+            this.txtAuditor.Name = "txtAuditor";
+            this.txtAuditor.Size = new System.Drawing.Size(202, 21);
+            this.txtAuditor.TabIndex = 10;
+            // 
+            // txtInvestigatorName
+            // 
+            this.txtInvestigatorName.Location = new System.Drawing.Point(409, 605);
+            this.txtInvestigatorName.Name = "txtInvestigatorName";
+            this.txtInvestigatorName.Size = new System.Drawing.Size(202, 21);
+            this.txtInvestigatorName.TabIndex = 9;
+            // 
+            // txtInvestigationDate
+            // 
+            this.txtInvestigationDate.Location = new System.Drawing.Point(75, 605);
+            this.txtInvestigationDate.Name = "txtInvestigationDate";
+            this.txtInvestigationDate.Size = new System.Drawing.Size(202, 21);
+            this.txtInvestigationDate.TabIndex = 8;
+            // 
+            // txtWeightNow
+            // 
+            this.txtWeightNow.Location = new System.Drawing.Point(743, 456);
+            this.txtWeightNow.Name = "txtWeightNow";
+            this.txtWeightNow.Size = new System.Drawing.Size(202, 21);
+            this.txtWeightNow.TabIndex = 7;
+            // 
+            // txtWeightBefore
+            // 
+            this.txtWeightBefore.Location = new System.Drawing.Point(409, 456);
+            this.txtWeightBefore.Name = "txtWeightBefore";
+            this.txtWeightBefore.Size = new System.Drawing.Size(202, 21);
+            this.txtWeightBefore.TabIndex = 6;
+            // 
+            // txtHeight
+            // 
+            this.txtHeight.Location = new System.Drawing.Point(75, 456);
+            this.txtHeight.Name = "txtHeight";
+            this.txtHeight.Size = new System.Drawing.Size(202, 21);
+            this.txtHeight.TabIndex = 5;
+            // 
+            // txtWeeks
+            // 
+            this.txtWeeks.Location = new System.Drawing.Point(743, 306);
+            this.txtWeeks.Name = "txtWeeks";
+            this.txtWeeks.Size = new System.Drawing.Size(202, 21);
+            this.txtWeeks.TabIndex = 4;
+            // 
+            // txtCustomerBirthday
+            // 
+            this.txtCustomerBirthday.Location = new System.Drawing.Point(409, 306);
+            this.txtCustomerBirthday.Name = "txtCustomerBirthday";
+            this.txtCustomerBirthday.Size = new System.Drawing.Size(202, 21);
+            this.txtCustomerBirthday.TabIndex = 3;
+            // 
+            // txtCustomerName
+            // 
+            this.txtCustomerName.Location = new System.Drawing.Point(75, 306);
+            this.txtCustomerName.Name = "txtCustomerName";
+            this.txtCustomerName.Size = new System.Drawing.Size(202, 21);
+            this.txtCustomerName.TabIndex = 2;
+            this.txtCustomerName.TextChanged += new System.EventHandler(this.txtCustomerName_TextChanged);
+            // 
+            // txtHealthBookID
+            // 
+            this.txtHealthBookID.Location = new System.Drawing.Point(409, 162);
+            this.txtHealthBookID.Name = "txtHealthBookID";
+            this.txtHealthBookID.Size = new System.Drawing.Size(202, 21);
+            this.txtHealthBookID.TabIndex = 1;
+            this.txtHealthBookID.TextChanged += new System.EventHandler(this.txtHealthBookID_TextChanged);
+            // 
+            // txtQueueID
+            // 
+            this.txtQueueID.Location = new System.Drawing.Point(75, 162);
+            this.txtQueueID.Name = "txtQueueID";
+            this.txtQueueID.Size = new System.Drawing.Size(202, 21);
+            this.txtQueueID.TabIndex = 0;
+            this.txtQueueID.TextChanged += new System.EventHandler(this.txtQueueID_TextChanged);
             // 
             // lblInvestigationCount
             // 
@@ -96,95 +186,6 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(406, 800);
             this.panel1.TabIndex = 0;
-            // 
-            // txtQueueID
-            // 
-            this.txtQueueID.Location = new System.Drawing.Point(75, 162);
-            this.txtQueueID.Name = "txtQueueID";
-            this.txtQueueID.Size = new System.Drawing.Size(202, 21);
-            this.txtQueueID.TabIndex = 0;
-            // 
-            // txtHealthBookID
-            // 
-            this.txtHealthBookID.Location = new System.Drawing.Point(409, 162);
-            this.txtHealthBookID.Name = "txtHealthBookID";
-            this.txtHealthBookID.Size = new System.Drawing.Size(202, 21);
-            this.txtHealthBookID.TabIndex = 1;
-            this.txtHealthBookID.TextChanged += new System.EventHandler(this.txtHealthBookID_TextChanged);
-            // 
-            // txtCustomerName
-            // 
-            this.txtCustomerName.Location = new System.Drawing.Point(75, 306);
-            this.txtCustomerName.Name = "txtCustomerName";
-            this.txtCustomerName.Size = new System.Drawing.Size(202, 21);
-            this.txtCustomerName.TabIndex = 2;
-            this.txtCustomerName.TextChanged += new System.EventHandler(this.txtCustomerName_TextChanged);
-            // 
-            // txtCustomerBirthday
-            // 
-            this.txtCustomerBirthday.Location = new System.Drawing.Point(409, 306);
-            this.txtCustomerBirthday.Name = "txtCustomerBirthday";
-            this.txtCustomerBirthday.Size = new System.Drawing.Size(202, 21);
-            this.txtCustomerBirthday.TabIndex = 3;
-            // 
-            // txtWeeks
-            // 
-            this.txtWeeks.Location = new System.Drawing.Point(743, 306);
-            this.txtWeeks.Name = "txtWeeks";
-            this.txtWeeks.Size = new System.Drawing.Size(202, 21);
-            this.txtWeeks.TabIndex = 4;
-            // 
-            // txtHeight
-            // 
-            this.txtHeight.Location = new System.Drawing.Point(75, 456);
-            this.txtHeight.Name = "txtHeight";
-            this.txtHeight.Size = new System.Drawing.Size(202, 21);
-            this.txtHeight.TabIndex = 5;
-            // 
-            // txtWeightBefore
-            // 
-            this.txtWeightBefore.Location = new System.Drawing.Point(409, 456);
-            this.txtWeightBefore.Name = "txtWeightBefore";
-            this.txtWeightBefore.Size = new System.Drawing.Size(202, 21);
-            this.txtWeightBefore.TabIndex = 6;
-            // 
-            // txtWeightNow
-            // 
-            this.txtWeightNow.Location = new System.Drawing.Point(743, 456);
-            this.txtWeightNow.Name = "txtWeightNow";
-            this.txtWeightNow.Size = new System.Drawing.Size(202, 21);
-            this.txtWeightNow.TabIndex = 7;
-            // 
-            // txtInvestigationDate
-            // 
-            this.txtInvestigationDate.Location = new System.Drawing.Point(75, 605);
-            this.txtInvestigationDate.Name = "txtInvestigationDate";
-            this.txtInvestigationDate.Size = new System.Drawing.Size(202, 21);
-            this.txtInvestigationDate.TabIndex = 8;
-            // 
-            // txtInvestigatorName
-            // 
-            this.txtInvestigatorName.Location = new System.Drawing.Point(409, 605);
-            this.txtInvestigatorName.Name = "txtInvestigatorName";
-            this.txtInvestigatorName.Size = new System.Drawing.Size(202, 21);
-            this.txtInvestigatorName.TabIndex = 9;
-            // 
-            // txtAuditor
-            // 
-            this.txtAuditor.Location = new System.Drawing.Point(743, 605);
-            this.txtAuditor.Name = "txtAuditor";
-            this.txtAuditor.Size = new System.Drawing.Size(202, 21);
-            this.txtAuditor.TabIndex = 10;
-            // 
-            // btnNewInvestigation
-            // 
-            this.btnNewInvestigation.Location = new System.Drawing.Point(786, 716);
-            this.btnNewInvestigation.Name = "btnNewInvestigation";
-            this.btnNewInvestigation.Size = new System.Drawing.Size(159, 56);
-            this.btnNewInvestigation.TabIndex = 11;
-            this.btnNewInvestigation.Text = "开始测试";
-            this.btnNewInvestigation.UseVisualStyleBackColor = true;
-            this.btnNewInvestigation.Click += new System.EventHandler(this.btnNewInvestigation_Click);
             // 
             // Mainform
             // 

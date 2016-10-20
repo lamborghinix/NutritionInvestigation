@@ -13,10 +13,8 @@
           <Property Name="HealthBookID" Type="char" MaxLength="256" />
           <Property Name="Name" Type="char" MaxLength="256" />
           <Property Name="Birthday" Type="datetime" />
-          <Property Name="GestationalWeek" Type="integer" />
           <Property Name="Height" Type="real" />
           <Property Name="BeforeWeight" Type="real" />
-          <Property Name="CurrentWeight" Type="real" />
         </EntityType>
         <EntityType Name="CustomerInvestigationRecord">
           <Key>
@@ -32,6 +30,7 @@
           <Property Name="AuditorID" Type="integer" />
           <Property Name="AuditorName" Type="char" MaxLength="256" />
           <Property Name="InvestigationStatus" Type="int" />
+          <Property Name="GestationalWeek" Type="int" />
         </EntityType>
         <EntityType Name="DataTransferRecords">
           <Key>
@@ -291,10 +290,8 @@
           <Property Name="HealthBookID" Type="String" MaxLength="256" FixedLength="true" Unicode="false" />
           <Property Name="Name" Type="String" MaxLength="256" FixedLength="true" Unicode="false" />
           <Property Name="Birthday" Type="DateTime" />
-          <Property Name="GestationalWeek" Type="Int64" />
           <Property Name="Height" Type="Double" />
           <Property Name="BeforeWeight" Type="Double" />
-          <Property Name="CurrentWeight" Type="Double" />
         </EntityType>
         <EntityType Name="CustomerInvestigationRecord">
           <Key>
@@ -310,6 +307,7 @@
           <Property Name="AuditorID" Type="Int64" />
           <Property Name="AuditorName" Type="String" MaxLength="256" FixedLength="true" Unicode="false" />
           <Property Name="InvestigationStatus" Type="Int32" />
+          <Property Name="GestationalWeek" Type="Int32" />
           <NavigationProperty Name="FoodIntakeRecords" Relationship="Self.FK_FoodIntakeRecord_0_0" FromRole="CustomerInvestigationRecord" ToRole="FoodIntakeRecord" />
           <NavigationProperty Name="FoodStatisticsResults" Relationship="Self.FK_FoodStatisticsResult_0_0" FromRole="CustomerInvestigationRecord" ToRole="FoodStatisticsResult" />
           <NavigationProperty Name="NutritionStatisticResults" Relationship="Self.FK_NutritionStatisticResults_0_0" FromRole="CustomerInvestigationRecord" ToRole="NutritionStatisticResults" />
@@ -579,10 +577,8 @@
                 <ScalarProperty Name="HealthBookID" ColumnName="HealthBookID" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Birthday" ColumnName="Birthday" />
-                <ScalarProperty Name="GestationalWeek" ColumnName="GestationalWeek" />
                 <ScalarProperty Name="Height" ColumnName="Height" />
                 <ScalarProperty Name="BeforeWeight" ColumnName="BeforeWeight" />
-                <ScalarProperty Name="CurrentWeight" ColumnName="CurrentWeight" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -599,6 +595,7 @@
                 <ScalarProperty Name="AuditorID" ColumnName="AuditorID" />
                 <ScalarProperty Name="AuditorName" ColumnName="AuditorName" />
                 <ScalarProperty Name="InvestigationStatus" ColumnName="InvestigationStatus" />
+                <ScalarProperty Name="GestationalWeek" ColumnName="GestationalWeek" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

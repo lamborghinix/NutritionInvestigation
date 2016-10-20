@@ -18,9 +18,7 @@ namespace NutritionInvestigation
         public string HealthBookID { get; set; }
         public string Name { get; set; }
         public Nullable<System.DateTime> Birthday { get; set; }
-        public Nullable<long> GestationalWeek { get; set; }
         public Nullable<double> Height { get; set; }
         public Nullable<double> BeforeWeight { get; set; }
-        public Nullable<double> CurrentWeight { get; set; }
     }
 }

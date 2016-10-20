@@ -32,6 +32,7 @@ namespace NutritionInvestigation
         public Nullable<long> AuditorID { get; set; }
         public string AuditorName { get; set; }
         public Nullable<int> InvestigationStatus { get; set; }
+        public Nullable<int> GestationalWeek { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<FoodIntakeRecord> FoodIntakeRecords { get; set; }
