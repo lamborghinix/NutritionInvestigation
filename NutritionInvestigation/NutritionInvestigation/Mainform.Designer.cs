@@ -140,7 +140,6 @@
             this.txtCustomerName.Name = "txtCustomerName";
             this.txtCustomerName.Size = new System.Drawing.Size(202, 21);
             this.txtCustomerName.TabIndex = 2;
-            this.txtCustomerName.TextChanged += new System.EventHandler(this.txtCustomerName_TextChanged);
             // 
             // txtHealthBookID
             // 

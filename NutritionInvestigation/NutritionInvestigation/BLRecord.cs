@@ -213,6 +213,127 @@ namespace NutritionInvestigation
             Debug.WriteLine("can't find customer info on the name {0}.", customerName);
             return false;
         }
+
+        internal bool UpdateInvestigationRecord(CustomerInvestigationRecord newInvestigation, string queueID, 
+            out CustomerInvestigationRecord myInvestigetionRecord,  out string saveInvestigationMessage)
+        {
+             myInvestigetionRecord = GetInvestigationRecord(queueID);
+            if(myInvestigetionRecord !=null)
+            {
+                myInvestigetionRecord.CurrentWeight = newInvestigation.CurrentWeight;
+                myInvestigetionRecord.GestationalWeek = newInvestigation.GestationalWeek;
+                myInvestigetionRecord.InvestigationDate = newInvestigation.InvestigationDate;
+                myInvestigetionRecord.InvestigatorName = newInvestigation.InvestigatorName;
+                myInvestigetionRecord.CustomerID = newInvestigation.CustomerID;
+                myInvestigetionRecord.CustomerName = newInvestigation.CustomerName;
+                int result;
+                try
+                {
+                    result = DALDB.GetInstance().SaveChanges();
+                }
+                catch (Exception ex)
+                {
+                    saveInvestigationMessage = "update Investigation result error, error message is " + ex.ToString();
+                    return false;
+                }
+                if(result>0)
+                {
+                    saveInvestigationMessage = "update investigation result successful";
+                    return true;
+                }
+                else
+                {
+                    saveInvestigationMessage = "update investigation result failure, save changes return " + result.ToString();
+                    return false;
+                }
+            }
+            else
+            {
+                //saveInvestigationMessage = "don't exist Investigation record, add a new one";
+                return AddInvestigationBaseInfo(newInvestigation, out saveInvestigationMessage);
+            }
+        }
+
+        /// <summary>
+        /// 更新孕妇基本信息
+        /// </summary>
+        /// <param name="newCustomerInfo"></param>
+        /// <param name="myCustomerInfo"></param>
+        /// <param name="saveCustomerMessage"></param>
+        /// <returns></returns>
+        internal bool UpdateCustomerInfo(CustomerInfo newCustomerInfo, string healthbookID,out CustomerInfo myCustomerInfo, out string saveCustomerMessage)
+        {
+             myCustomerInfo = GetCustomersInfo(healthbookID);
+            if(myCustomerInfo !=null)
+            {
+                myCustomerInfo.Name = newCustomerInfo.Name;
+                myCustomerInfo.Birthday = newCustomerInfo.Birthday;
+                myCustomerInfo.BeforeWeight = newCustomerInfo.BeforeWeight;
+                myCustomerInfo.Height = newCustomerInfo.Height;
+                int result;
+                try
+                {
+                    result = DALDB.GetInstance().SaveChanges();
+                }
+                catch (Exception ex)
+                {
+                    saveCustomerMessage = "Update customer info Error, Error Message is " + ex.ToString();
+                    return false;
+                }
+                if(result>0)
+                {
+                    saveCustomerMessage = "Update customer info Successful.";
+                    return true;
+                }
+                else
+                {
+                    saveCustomerMessage = "Update customer info failure, save changes return " + result.ToString();
+                    return false;
+                }
+            }
+            else
+            {
+                saveCustomerMessage = "don't exist customer in DB, Add as a new one";
+                return AddCustomer(newCustomerInfo);
+            }
+        }
+        /// <summary>
+        /// 增加一条营养调查基本信息记录
+        /// </summary>
+        /// <param name="newInvestigation"></param>
+        /// <param name="saveInvestigationMessage"></param>
+        /// <returns></returns>
+        internal bool AddInvestigationBaseInfo(CustomerInvestigationRecord newInvestigation, out string saveInvestigationMessage)
+        {
+            CustomerInvestigationRecord existInvestigation = GetInvestigationRecord(newInvestigation.QueueID);
+            if (existInvestigation != null)
+            {
+                saveInvestigationMessage = "Exist Investigation which queueId is " + newInvestigation.QueueID;
+                return false;
+            }
+            DALDB.GetInstance().CustomerInvestigationRecords.Add(newInvestigation);
+            int result;
+            try
+            {
+                result = DALDB.GetInstance().SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                saveInvestigationMessage = "Add Investigation info to DB error, Error Message is " + ex.ToString();
+                return false;
+            }
+            if(result>0)
+            {
+                saveInvestigationMessage = "Add Investigation successful";
+                return true;
+            }
+            else
+            {
+                saveInvestigationMessage = "Add Investigation failure, saveChanges return " + result.ToString();
+                return false;
+            }
+        }
+
         //新增一个客户信息。
         public bool AddCustomer(CustomerInfo newCustomer)
         {
@@ -257,6 +378,23 @@ namespace NutritionInvestigation
                     where u.MyID == customerID
                     select u;
             if(p!=null && p.Count()==1)
+            {
+                myCustomer = p.First();
+            }
+            else
+            {
+                myCustomer = null;
+            }
+            return myCustomer;
+        }
+
+        internal CustomerInfo GetCustomersInfo(string healthbookID)
+        {
+            CustomerInfo myCustomer;
+            var p = from u in DALDB.GetInstance().CustomerInfoes
+                    where u.HealthBookID == healthbookID
+                    select u;
+            if (p != null && p.Count() == 1)
             {
                 myCustomer = p.First();
             }

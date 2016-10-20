@@ -4,9 +4,9 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="ca93ccb6939f41ae9c0873a9361e9f54" Name="Diagram1">
+      <Diagram DiagramId="0131620880754454b35b32300d142842" Name="Diagram1">
         <EntityTypeShape EntityType="myDBModel.CustomerInfo" Width="1.5" PointX="7.75" PointY="5.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="myDBModel.CustomerInvestigationRecord" Width="1.5" PointX="0.75" PointY="4.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="myDBModel.CustomerInvestigationRecord" Width="1.5" PointX="0.75" PointY="4" IsExpanded="true" />
         <EntityTypeShape EntityType="myDBModel.DataTransferRecord" Width="1.5" PointX="7.75" PointY="8.75" IsExpanded="true" />
         <EntityTypeShape EntityType="myDBModel.Doctor" Width="1.5" PointX="9.75" PointY="5.75" IsExpanded="true" />
         <EntityTypeShape EntityType="myDBModel.FoodClass" Width="1.5" PointX="5.75" PointY="1" IsExpanded="true" />

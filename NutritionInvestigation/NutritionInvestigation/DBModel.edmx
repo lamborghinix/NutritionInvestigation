@@ -4,13 +4,13 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="myDBModel.Store" Provider="System.Data.SQLite.EF6" ProviderManifestToken="data source=d:\Users\lambo\Documents\GitHubVisualStudio\NutritionInvestigation\NutritionInvestigation\NutritionInvestigation\DB\myDB.db" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="myDBModel.Store" Provider="System.Data.SQLite.EF6" ProviderManifestToken="data source=d:\Users\lambo\Documents\GitHubVisualStudio\NutritionInvestigation\NutritionInvestigation\NutritionInvestigation\DB\myDB.db" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="CustomerInfo">
           <Key>
             <PropertyRef Name="MyID" />
           </Key>
           <Property Name="MyID" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="HealthBookID" Type="char" MaxLength="256" />
+          <Property Name="HealthBookID" Type="char" MaxLength="256" Nullable="false" />
           <Property Name="Name" Type="char" MaxLength="256" />
           <Property Name="Birthday" Type="datetime" />
           <Property Name="Height" Type="real" />
@@ -21,8 +21,10 @@
             <PropertyRef Name="MyID" />
           </Key>
           <Property Name="MyID" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="CustomerID" Type="integer" Nullable="false" />
           <Property Name="QueueID" Type="char" MaxLength="256" Nullable="false" />
+          <Property Name="HealthBookID" Type="char" MaxLength="256" Nullable="false" />
+          <Property Name="CustomerID" Type="integer" />
+          <Property Name="CustomerName" Type="char" MaxLength="256" Nullable="false" />
           <Property Name="InvestigationDate" Type="datetime" />
           <Property Name="CurrentWeight" Type="real" />
           <Property Name="InvestigatorID" Type="integer" />
@@ -277,8 +279,7 @@
             <End Role="NutritionStatisticResults" EntitySet="NutritionStatisticResults" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="myDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -287,7 +288,7 @@
             <PropertyRef Name="MyID" />
           </Key>
           <Property Name="MyID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="HealthBookID" Type="String" MaxLength="256" FixedLength="true" Unicode="false" />
+          <Property Name="HealthBookID" Type="String" MaxLength="256" FixedLength="true" Unicode="false" Nullable="false" />
           <Property Name="Name" Type="String" MaxLength="256" FixedLength="true" Unicode="false" />
           <Property Name="Birthday" Type="DateTime" />
           <Property Name="Height" Type="Double" />
@@ -298,7 +299,7 @@
             <PropertyRef Name="MyID" />
           </Key>
           <Property Name="MyID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="CustomerID" Type="Int64" Nullable="false" />
+          <Property Name="CustomerID" Type="Int64" />
           <Property Name="QueueID" Type="String" MaxLength="256" FixedLength="true" Unicode="false" Nullable="false" />
           <Property Name="InvestigationDate" Type="DateTime" />
           <Property Name="CurrentWeight" Type="Double" />
@@ -308,9 +309,11 @@
           <Property Name="AuditorName" Type="String" MaxLength="256" FixedLength="true" Unicode="false" />
           <Property Name="InvestigationStatus" Type="Int32" />
           <Property Name="GestationalWeek" Type="Int32" />
+          <Property Name="CustomerName" Type="String" MaxLength="256" FixedLength="true" Unicode="false" Nullable="false" />
           <NavigationProperty Name="FoodIntakeRecords" Relationship="Self.FK_FoodIntakeRecord_0_0" FromRole="CustomerInvestigationRecord" ToRole="FoodIntakeRecord" />
           <NavigationProperty Name="FoodStatisticsResults" Relationship="Self.FK_FoodStatisticsResult_0_0" FromRole="CustomerInvestigationRecord" ToRole="FoodStatisticsResult" />
           <NavigationProperty Name="NutritionStatisticResults" Relationship="Self.FK_NutritionStatisticResults_0_0" FromRole="CustomerInvestigationRecord" ToRole="NutritionStatisticResults" />
+          <Property Name="HealthBookID" Type="String" Nullable="false" MaxLength="256" FixedLength="true" Unicode="false" />
         </EntityType>
         <EntityType Name="DataTransferRecord">
           <Key>
@@ -585,6 +588,7 @@
           <EntitySetMapping Name="CustomerInvestigationRecords">
             <EntityTypeMapping TypeName="myDBModel.CustomerInvestigationRecord">
               <MappingFragment StoreEntitySet="CustomerInvestigationRecord">
+                <ScalarProperty Name="HealthBookID" ColumnName="HealthBookID" />
                 <ScalarProperty Name="MyID" ColumnName="MyID" />
                 <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
                 <ScalarProperty Name="QueueID" ColumnName="QueueID" />
@@ -596,6 +600,7 @@
                 <ScalarProperty Name="AuditorName" ColumnName="AuditorName" />
                 <ScalarProperty Name="InvestigationStatus" ColumnName="InvestigationStatus" />
                 <ScalarProperty Name="GestationalWeek" ColumnName="GestationalWeek" />
+                <ScalarProperty Name="CustomerName" ColumnName="CustomerName" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
