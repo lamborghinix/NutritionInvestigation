@@ -148,6 +148,27 @@
     <Compile Include="RNIStandard.cs">
       <DependentUpon>DBModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="UCDaily.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UCDaily.Designer.cs">
+      <DependentUpon>UCDaily.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UCMonthly.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UCMonthly.Designer.cs">
+      <DependentUpon>UCMonthly.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UCWeekly.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UCWeekly.Designer.cs">
+      <DependentUpon>UCWeekly.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="InvestigationForm.resx">
+      <DependentUpon>InvestigationForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Mainform.resx">
       <DependentUpon>Mainform.cs</DependentUpon>
     </EmbeddedResource>
@@ -161,6 +182,15 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="UCDaily.resx">
+      <DependentUpon>UCDaily.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UCMonthly.resx">
+      <DependentUpon>UCMonthly.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UCWeekly.resx">
+      <DependentUpon>UCWeekly.cs</DependentUpon>
+    </EmbeddedResource>
     <EntityDeploy Include="DBModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>DBModel.Designer.cs</LastGenOutput>

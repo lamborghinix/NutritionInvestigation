@@ -23,8 +23,10 @@ namespace NutritionInvestigation
         }
     
         public long MyID { get; set; }
-        public Nullable<long> CustomerID { get; set; }
         public string QueueID { get; set; }
+        public string HealthBookID { get; set; }
+        public Nullable<long> CustomerID { get; set; }
+        public string CustomerName { get; set; }
         public Nullable<System.DateTime> InvestigationDate { get; set; }
         public Nullable<double> CurrentWeight { get; set; }
         public Nullable<long> InvestigatorID { get; set; }
@@ -33,8 +35,6 @@ namespace NutritionInvestigation
         public string AuditorName { get; set; }
         public Nullable<int> InvestigationStatus { get; set; }
         public Nullable<int> GestationalWeek { get; set; }
-        public string CustomerName { get; set; }
-        public string HealthBookID { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<FoodIntakeRecord> FoodIntakeRecords { get; set; }

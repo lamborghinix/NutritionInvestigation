@@ -20,12 +20,12 @@ namespace NutritionInvestigation
             this.FoodNutritions = new HashSet<FoodNutrition>();
         }
     
-        public long MyID { get; set; }
+        public string MyID { get; set; }
         public string FoodClassName { get; set; }
-        public Nullable<long> ParentID { get; set; }
+        public string ParentID { get; set; }
         public string ParentName { get; set; }
         public Nullable<long> Percent { get; set; }
-        public Nullable<long> Edible { get; set; }
+        public Nullable<double> Edible { get; set; }
         public Nullable<int> RecordMode { get; set; }
         public string TypicalFood { get; set; }
         public string FoodIndex { get; set; }

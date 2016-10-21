@@ -15,7 +15,7 @@ namespace NutritionInvestigation
     public partial class FoodNutrition
     {
         public long MyID { get; set; }
-        public long FoodClassID { get; set; }
+        public string FoodClassID { get; set; }
         public long NutritionElementID { get; set; }
         public Nullable<double> NutritionValue { get; set; }
     

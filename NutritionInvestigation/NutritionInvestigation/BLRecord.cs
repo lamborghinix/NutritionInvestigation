@@ -814,7 +814,7 @@ namespace NutritionInvestigation
                 foreach (var t in calcFoodClass)
                 {
                     double foodInputValue = -1;
-                    long parentID = (int)t.ParentID;
+                    string parentID = t.ParentID;
                     foreach (var t2 in p)
                     {
                         if (t2.FoodClassID == parentID)

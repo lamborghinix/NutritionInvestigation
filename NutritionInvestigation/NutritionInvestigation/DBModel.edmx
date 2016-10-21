@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="myDBModel.Store" Provider="System.Data.SQLite.EF6" ProviderManifestToken="data source=d:\Users\lambo\Documents\GitHubVisualStudio\NutritionInvestigation\NutritionInvestigation\NutritionInvestigation\DB\myDB.db" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="myDBModel.Store" Provider="System.Data.SQLite.EF6" ProviderManifestToken="data source=d:\Users\lambo\Documents\GitHubVisualStudio\NutritionInvestigation\NutritionInvestigation\NutritionInvestigation\DB\myDB.db" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="CustomerInfo">
           <Key>
             <PropertyRef Name="MyID" />
@@ -58,12 +58,12 @@
           <Key>
             <PropertyRef Name="MyID" />
           </Key>
-          <Property Name="MyID" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MyID" Type="char" MaxLength="256" Nullable="false" />
           <Property Name="FoodClassName" Type="char" MaxLength="256" />
-          <Property Name="ParentID" Type="integer" />
+          <Property Name="ParentID" Type="char" MaxLength="256" />
           <Property Name="ParentName" Type="char" MaxLength="256" />
           <Property Name="Percent" Type="integer" />
-          <Property Name="Edible" Type="integer" />
+          <Property Name="Edible" Type="real" />
           <Property Name="RecordMode" Type="int" />
           <Property Name="TypicalFood" Type="char" MaxLength="256" />
           <Property Name="FoodIndex" Type="char" MaxLength="256" />
@@ -81,7 +81,7 @@
           </Key>
           <Property Name="MyID" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="CustomerInputRecordID" Type="integer" />
-          <Property Name="FoodClassID" Type="integer" Nullable="false" />
+          <Property Name="FoodClassID" Type="char" MaxLength="256" Nullable="false" />
           <Property Name="IntakeFrequency" Type="integer" />
           <Property Name="Intake" Type="real" />
           <Property Name="AverageADay" Type="real" />
@@ -93,7 +93,7 @@
             <PropertyRef Name="MyID" />
           </Key>
           <Property Name="MyID" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="FoodClassID" Type="integer" Nullable="false" />
+          <Property Name="FoodClassID" Type="char" MaxLength="256" Nullable="false" />
           <Property Name="NutritionElementID" Type="integer" Nullable="false" />
           <Property Name="NutritionValue" Type="real" />
         </EntityType>
@@ -103,7 +103,7 @@
           </Key>
           <Property Name="MyID" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="FoodStatisticsName" Type="char" MaxLength="256" />
-          <Property Name="FoodClassID" Type="integer" />
+          <Property Name="FoodClassID" Type="char" MaxLength="256" />
           <Property Name="FoodClassUnit" Type="char" MaxLength="256" />
           <Property Name="SortID" Type="integer" />
         </EntityType>
@@ -114,7 +114,7 @@
           <Property Name="MyID" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="CustomerInputRecordID" Type="integer" />
           <Property Name="FoodStaticName" Type="char" MaxLength="256" />
-          <Property Name="FoodClassID" Type="integer" />
+          <Property Name="FoodClassID" Type="char" MaxLength="256" />
           <Property Name="FoodClassUnit" Type="char" MaxLength="256" />
           <Property Name="SortID" Type="integer" />
           <Property Name="FoodClassStatisticsValue" Type="real" />
@@ -125,6 +125,7 @@
           </Key>
           <Property Name="MyID" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ElementName" Type="char" MaxLength="256" />
+          <Property Name="ElementNameCS" Type="char" MaxLength="256" />
           <Property Name="ElementUnit" Type="char" MaxLength="256" />
           <Property Name="ShowOnReport" Type="bit" />
           <Property Name="SortID" Type="integer" />
@@ -279,7 +280,8 @@
             <End Role="NutritionStatisticResults" EntitySet="NutritionStatisticResults" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="myDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -299,8 +301,10 @@
             <PropertyRef Name="MyID" />
           </Key>
           <Property Name="MyID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="CustomerID" Type="Int64" />
           <Property Name="QueueID" Type="String" MaxLength="256" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="HealthBookID" Type="String" MaxLength="256" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="CustomerID" Type="Int64" />
+          <Property Name="CustomerName" Type="String" MaxLength="256" FixedLength="true" Unicode="false" Nullable="false" />
           <Property Name="InvestigationDate" Type="DateTime" />
           <Property Name="CurrentWeight" Type="Double" />
           <Property Name="InvestigatorID" Type="Int64" />
@@ -309,11 +313,9 @@
           <Property Name="AuditorName" Type="String" MaxLength="256" FixedLength="true" Unicode="false" />
           <Property Name="InvestigationStatus" Type="Int32" />
           <Property Name="GestationalWeek" Type="Int32" />
-          <Property Name="CustomerName" Type="String" MaxLength="256" FixedLength="true" Unicode="false" Nullable="false" />
           <NavigationProperty Name="FoodIntakeRecords" Relationship="Self.FK_FoodIntakeRecord_0_0" FromRole="CustomerInvestigationRecord" ToRole="FoodIntakeRecord" />
           <NavigationProperty Name="FoodStatisticsResults" Relationship="Self.FK_FoodStatisticsResult_0_0" FromRole="CustomerInvestigationRecord" ToRole="FoodStatisticsResult" />
           <NavigationProperty Name="NutritionStatisticResults" Relationship="Self.FK_NutritionStatisticResults_0_0" FromRole="CustomerInvestigationRecord" ToRole="NutritionStatisticResults" />
-          <Property Name="HealthBookID" Type="String" Nullable="false" MaxLength="256" FixedLength="true" Unicode="false" />
         </EntityType>
         <EntityType Name="DataTransferRecord">
           <Key>
@@ -339,12 +341,12 @@
           <Key>
             <PropertyRef Name="MyID" />
           </Key>
-          <Property Name="MyID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MyID" Type="String" MaxLength="256" FixedLength="true" Unicode="false" Nullable="false" />
           <Property Name="FoodClassName" Type="String" MaxLength="256" FixedLength="true" Unicode="false" />
-          <Property Name="ParentID" Type="Int64" />
+          <Property Name="ParentID" Type="String" MaxLength="256" FixedLength="true" Unicode="false" />
           <Property Name="ParentName" Type="String" MaxLength="256" FixedLength="true" Unicode="false" />
           <Property Name="Percent" Type="Int64" />
-          <Property Name="Edible" Type="Int64" />
+          <Property Name="Edible" Type="Double" />
           <Property Name="RecordMode" Type="Int32" />
           <Property Name="TypicalFood" Type="String" MaxLength="256" FixedLength="true" Unicode="false" />
           <Property Name="FoodIndex" Type="String" MaxLength="256" FixedLength="true" Unicode="false" />
@@ -363,7 +365,7 @@
           </Key>
           <Property Name="MyID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="CustomerInputRecordID" Type="Int64" />
-          <Property Name="FoodClassID" Type="Int64" Nullable="false" />
+          <Property Name="FoodClassID" Type="String" MaxLength="256" FixedLength="true" Unicode="false" Nullable="false" />
           <Property Name="IntakeFrequency" Type="Int64" />
           <Property Name="Intake" Type="Double" />
           <Property Name="AverageADay" Type="Double" />
@@ -376,7 +378,7 @@
             <PropertyRef Name="MyID" />
           </Key>
           <Property Name="MyID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="FoodClassID" Type="Int64" Nullable="false" />
+          <Property Name="FoodClassID" Type="String" MaxLength="256" FixedLength="true" Unicode="false" Nullable="false" />
           <Property Name="NutritionElementID" Type="Int64" Nullable="false" />
           <Property Name="NutritionValue" Type="Double" />
           <NavigationProperty Name="FoodClass" Relationship="Self.FK_FoodNutritions_1_0" FromRole="FoodNutritions" ToRole="FoodClass" />
@@ -388,7 +390,7 @@
           </Key>
           <Property Name="MyID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="FoodStatisticsName" Type="String" MaxLength="256" FixedLength="true" Unicode="false" />
-          <Property Name="FoodClassID" Type="Int64" />
+          <Property Name="FoodClassID" Type="String" MaxLength="256" FixedLength="true" Unicode="false" />
           <Property Name="FoodClassUnit" Type="String" MaxLength="256" FixedLength="true" Unicode="false" />
           <Property Name="SortID" Type="Int64" />
         </EntityType>
@@ -399,7 +401,7 @@
           <Property Name="MyID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="CustomerInputRecordID" Type="Int64" />
           <Property Name="FoodStaticName" Type="String" MaxLength="256" FixedLength="true" Unicode="false" />
-          <Property Name="FoodClassID" Type="Int64" />
+          <Property Name="FoodClassID" Type="String" MaxLength="256" FixedLength="true" Unicode="false" />
           <Property Name="FoodClassUnit" Type="String" MaxLength="256" FixedLength="true" Unicode="false" />
           <Property Name="SortID" Type="Int64" />
           <Property Name="FoodClassStatisticsValue" Type="Double" />
@@ -411,6 +413,7 @@
           </Key>
           <Property Name="MyID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="ElementName" Type="String" MaxLength="256" FixedLength="true" Unicode="false" />
+          <Property Name="ElementNameCS" Type="String" MaxLength="256" FixedLength="true" Unicode="false" />
           <Property Name="ElementUnit" Type="String" MaxLength="256" FixedLength="true" Unicode="false" />
           <Property Name="ShowOnReport" Type="Boolean" />
           <Property Name="SortID" Type="Int64" />
@@ -588,10 +591,11 @@
           <EntitySetMapping Name="CustomerInvestigationRecords">
             <EntityTypeMapping TypeName="myDBModel.CustomerInvestigationRecord">
               <MappingFragment StoreEntitySet="CustomerInvestigationRecord">
-                <ScalarProperty Name="HealthBookID" ColumnName="HealthBookID" />
                 <ScalarProperty Name="MyID" ColumnName="MyID" />
-                <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
                 <ScalarProperty Name="QueueID" ColumnName="QueueID" />
+                <ScalarProperty Name="HealthBookID" ColumnName="HealthBookID" />
+                <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
+                <ScalarProperty Name="CustomerName" ColumnName="CustomerName" />
                 <ScalarProperty Name="InvestigationDate" ColumnName="InvestigationDate" />
                 <ScalarProperty Name="CurrentWeight" ColumnName="CurrentWeight" />
                 <ScalarProperty Name="InvestigatorID" ColumnName="InvestigatorID" />
@@ -600,7 +604,6 @@
                 <ScalarProperty Name="AuditorName" ColumnName="AuditorName" />
                 <ScalarProperty Name="InvestigationStatus" ColumnName="InvestigationStatus" />
                 <ScalarProperty Name="GestationalWeek" ColumnName="GestationalWeek" />
-                <ScalarProperty Name="CustomerName" ColumnName="CustomerName" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -701,6 +704,7 @@
               <MappingFragment StoreEntitySet="NuritiveElement">
                 <ScalarProperty Name="MyID" ColumnName="MyID" />
                 <ScalarProperty Name="ElementName" ColumnName="ElementName" />
+                <ScalarProperty Name="ElementNameCS" ColumnName="ElementNameCS" />
                 <ScalarProperty Name="ElementUnit" ColumnName="ElementUnit" />
                 <ScalarProperty Name="ShowOnReport" ColumnName="ShowOnReport" />
                 <ScalarProperty Name="SortID" ColumnName="SortID" />

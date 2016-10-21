@@ -16,7 +16,7 @@ namespace NutritionInvestigation
     {
         public long MyID { get; set; }
         public Nullable<long> CustomerInputRecordID { get; set; }
-        public long FoodClassID { get; set; }
+        public string FoodClassID { get; set; }
         public Nullable<long> IntakeFrequency { get; set; }
         public Nullable<double> Intake { get; set; }
         public Nullable<double> AverageADay { get; set; }

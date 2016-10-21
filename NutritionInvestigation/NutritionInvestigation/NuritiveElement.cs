@@ -22,6 +22,7 @@ namespace NutritionInvestigation
     
         public long MyID { get; set; }
         public string ElementName { get; set; }
+        public string ElementNameCS { get; set; }
         public string ElementUnit { get; set; }
         public Nullable<bool> ShowOnReport { get; set; }
         public Nullable<long> SortID { get; set; }
