@@ -37,7 +37,7 @@
             this.button9 = new System.Windows.Forms.Button();
             this.button8 = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
-            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.txtIntakeValue = new System.Windows.Forms.TextBox();
             this.button7 = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
@@ -94,7 +94,7 @@
             this.panel4.Controls.Add(this.button9);
             this.panel4.Controls.Add(this.button8);
             this.panel4.Controls.Add(this.label2);
-            this.panel4.Controls.Add(this.textBox2);
+            this.panel4.Controls.Add(this.txtIntakeValue);
             this.panel4.Controls.Add(this.button7);
             this.panel4.Controls.Add(this.label4);
             this.panel4.Location = new System.Drawing.Point(435, 300);
@@ -129,12 +129,12 @@
             this.label2.TabIndex = 3;
             this.label2.Text = "参考图示";
             // 
-            // textBox2
+            // txtIntakeValue
             // 
-            this.textBox2.Location = new System.Drawing.Point(279, 25);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(100, 21);
-            this.textBox2.TabIndex = 2;
+            this.txtIntakeValue.Location = new System.Drawing.Point(279, 25);
+            this.txtIntakeValue.Name = "txtIntakeValue";
+            this.txtIntakeValue.Size = new System.Drawing.Size(100, 21);
+            this.txtIntakeValue.TabIndex = 2;
             // 
             // button7
             // 
@@ -184,7 +184,7 @@
         private System.Windows.Forms.Button button9;
         private System.Windows.Forms.Button button8;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.TextBox txtIntakeValue;
         private System.Windows.Forms.Button button7;
         private System.Windows.Forms.Label label4;
     }

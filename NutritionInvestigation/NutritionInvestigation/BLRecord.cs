@@ -29,6 +29,38 @@ namespace NutritionInvestigation
             return RecordsCount;
         }
         /// <summary>
+        /// 获取所有需要输入的食品类表
+        /// </summary>
+        /// <returns></returns>
+        internal List<FoodClass> GetIntakeFoodClass()
+        {
+            var p = from u in DALDB.GetInstance().FoodClasses
+                    where u.NeedInput == true
+                    select u;
+            if (p != null && p.Count() > 0)
+                return p.ToList();
+            else
+                return null;
+        }
+        /// <summary>
+        /// 获取当前调查已经填写的记录
+        /// </summary>
+        /// <param name="queueID"></param>
+        /// <returns></returns>
+        internal List<FoodIntakeRecord> GetFoodIntakeList(string queueID)
+        {
+            var p = from u in DALDB.GetInstance().FoodIntakeRecords
+                    where u.CustomerInvestigationRecord.QueueID == queueID
+                    select u;
+            if (p != null && p.Count() > 0)
+            {
+                return p.ToList();
+            }
+            else
+                return null;
+        }
+
+        /// <summary>
         /// 获取所有客户信息。
         /// </summary>
         /// <returns></returns>
@@ -311,6 +343,7 @@ namespace NutritionInvestigation
                 saveInvestigationMessage = "Exist Investigation which queueId is " + newInvestigation.QueueID;
                 return false;
             }
+            newInvestigation.InvestigationStatus = (int)InvestigateStatus.InvestigateInputting;
             DALDB.GetInstance().CustomerInvestigationRecords.Add(newInvestigation);
             int result;
             try

@@ -99,7 +99,7 @@ namespace NutritionInvestigation
             {
                 myInvestigation = savedInvestigation;
                 myCustomerInfo = savedCustomerInfo;
-                InvestigationForm newInvestigationForm = new InvestigationForm();
+                InvestigationForm newInvestigationForm = new InvestigationForm(myInvestigation);
                 newInvestigationForm.Show();
             }
             else
